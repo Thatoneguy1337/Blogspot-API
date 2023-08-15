@@ -14,7 +14,7 @@ class IsIdOwnerOrModPermission(permissions.BasePermission):
         return request.user.id == view.kwargs["user_id"] or request.user.is_superuser
 
 
-class IsUserOrMod(permissions.BasePermision):
+class IsUserOrMod(permissions.BasePermission):
     def has_permission(self, request: Request, view: View):
         if request.method == "GET":
             return True

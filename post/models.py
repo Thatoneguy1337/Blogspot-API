@@ -6,8 +6,7 @@ class Post(models.Model):
         ordering = ["id"]
 
     description = models.CharField(max_length=50)
-    picture = models.FileField(upload_to="static", null=True, blank=True)
+    picture = models.FileField(upload_to="static", blank=True)
     user = models.ForeignKey(
-        "users.User", on_delete=models.CASCADE, related_name="posts"
+        "user.User", on_delete=models.CASCADE, related_name="post"
     )
-

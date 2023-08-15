@@ -12,13 +12,14 @@ class UserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    @extend_schema(
-        operation_id="Create User",
-        response={200: UserSerializer},
-        description="Create User",
-        summary="Create User",
-        tags=["User"],
-    )
+    # @extend_schema(
+    #     operation_id="Create User",
+    #     response={200: UserSerializer},
+    #     description="Create User",
+    #     summary="Create User",
+    #     tags=["User"],
+    # )
+
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
