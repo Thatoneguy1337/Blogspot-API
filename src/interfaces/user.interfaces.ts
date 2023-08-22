@@ -4,7 +4,9 @@ import {
     userSchemaRequest,
     userSchemaResponse,
     resetEmailSchema,
+    manyUsersSchemaResponse
   } from "../schemas/user.schemas";
+import { type } from "os";
   
   export type TUser = z.infer<typeof userSchema>;
   
@@ -13,6 +15,8 @@ import {
   export type TUserResponse = z.infer<typeof userSchemaResponse>;
   
   export type TUserUpdateRequest = Partial<TUserRequest>;
+
+  export type TUserManyRequest = z.infer<typeof manyUsersSchemaResponse>
   
   export type TResetEmail = z.infer<typeof resetEmailSchema>
 

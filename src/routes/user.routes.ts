@@ -5,7 +5,8 @@ import {
     deleteUserController,
     retrieveUserController,
     updateUserController,
-    retrieveUserByTokenController
+    retrieveUserByTokenController,
+    listAllUsersController
   } from "../controllers/user";
   
 import {
@@ -28,6 +29,7 @@ import {
     validateSocialSecurityExistsMiddleware,
     createUserController
   );
+  userRoutes.get("",validateAuthMiddleware,listAllUsersController)
   userRoutes.get("/profile", validateAuthMiddleware, retrieveUserByTokenController);
   userRoutes.get("/:id", validateUserExistsMiddleware, retrieveUserController);
   userRoutes.use(
