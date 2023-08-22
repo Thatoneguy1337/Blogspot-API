@@ -11,6 +11,8 @@ CREATE TABLE "users" (
     "telephone" VARCHAR(11) NOT NULL,
     "birthdate" VARCHAR(10) NOT NULL,
     "description" TEXT NOT NULL,
+    "is_banned" BOOLEAN NOT NULL,
+    "is_active" BOOLEAN NOT NULL,
     "is_moderator" BOOLEAN NOT NULL,
     "zip_code" VARCHAR(8) NOT NULL,
     "state" VARCHAR(127) NOT NULL,
