@@ -10,6 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Followers {
+  user        Users?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id     Int      @unique
+  @@map("followers")
+}
+
+
 
 model Users {
   id             Int        @id @default(autoincrement())
@@ -31,9 +38,44 @@ model Users {
   city           String     @db.VarChar(127)
   street         String     @db.VarChar(127)
   number         String     @db.VarChar(127)
+  posts          Posts[]   
+  threads        Threads[]
+  followers      Followers[]
 
- @@map("users")
+  @@map("users")
 }
+
+model Threads {
+  id          Int      @id @default(autoincrement())
+  created_at  DateTime @default(now())
+  edited      Boolean? @db.Boolean() @default(false)
+  description String?  @db.Text()
+  comment_img String?  @db.VarChar(270)
+  posts       Posts?   @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  post_id     Int?
+  user        Users?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id     Int?
+
+  @@map("threads")
+}
+
+
+
+
+
+model Posts {
+  id          Int   @id @default(autoincrement())
+  user_post   Users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id     Int 
+  description String?   @db.Text()
+  post_img    String?   @db.VarChar()
+  likes       Int
+  dislikes    Int  
+  threads     Threads[]      
+  
+  @@map("posts")
+}
+
 
 
 

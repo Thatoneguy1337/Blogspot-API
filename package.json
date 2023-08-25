@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@prisma/client": "^5.1.1",
+    "@prisma/client": "^5.2.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/node": "^20.5.1",
     "@types/nodemailer": "^6.4.9",
@@ -12,7 +12,6 @@
     "jsonwebtoken": "^9.0.1",
     "nodemailer": "^6.9.4",
     "pg": "^8.11.3",
-    "prisma": "^5.1.1",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
@@ -22,7 +21,8 @@
   "devDependencies": {
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
-    "@types/jsonwebtoken": "^9.0.2"
+    "@types/jsonwebtoken": "^9.0.2",
+    "prisma": "^5.2.0"
   },
   "name": "projeto-rede-social-api",
   "description": "",
