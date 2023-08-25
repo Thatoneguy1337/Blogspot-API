@@ -8,12 +8,13 @@ export const updatePostService = async (
   postId: number
 ): Promise<TPostResponse> => {
   
- const updatedPost: Posts = await prisma.posts.update({
-     where: { id: postId },
-     data: {
-      ...data,
-    },
-    });
+  const updatedPost: Posts = await prisma.posts.update({
+    where: { id: postId },
+    data: {
+      ...data
+    }
+    
+});
 
   return postSchemaResponse.parse(updatedPost);
 };

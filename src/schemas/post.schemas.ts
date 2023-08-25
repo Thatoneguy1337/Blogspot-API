@@ -11,7 +11,7 @@ const postSchema = z.object({
       username: z.string(),
       post_img: z.string(),
       description: z.string(),
-    }),
+    }).nullish(),
     description: z.string().max(270).nullable(),
     post_img: z.string().nullable(),
     likes: z.number().default(0),
@@ -25,7 +25,13 @@ const postSchemaRequest = postSchema.omit({
     threads: true,
 })
 
-const postSchemaResponse = postSchema;
+const postSchemaResponse = postSchema
+  .omit({
+    id: true,
+    user_id: true,
+    user_post: true,
+  })
+  .deepPartial();
 
 const manyPostSchemaResponse = z.array(postSchemaResponse);
 
