@@ -16,7 +16,7 @@ import {
 
     export type TManyPosts = z.infer<typeof manyPostSchemaResponse>;
 
-    export type TPostUpdate = Partial<typeof postSchemaUpdate>;
+    export type TPostUpdateRequest = Partial<typeof postSchemaUpdate>;
 
     export type TPostThreads = z.infer<typeof postThreadsResponse>;
 

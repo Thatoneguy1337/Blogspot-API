@@ -1,10 +1,10 @@
-import { TPostResponse, TPostUpdate } from "../../interfaces/post.interfaces";
+import { TPostResponse, TPostUpdateRequest } from "../../interfaces/post.interfaces";
 import { prisma } from "../../server";
 import { postSchemaResponse } from "../../schemas/post.schemas";
 import { Posts } from "@prisma/client";
 
 export const updatePostService = async (
-  data: TPostUpdate,
+  data: TPostUpdateRequest,
   postId: number
 ): Promise<TPostResponse> => {
   

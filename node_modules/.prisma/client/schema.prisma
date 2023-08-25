@@ -71,8 +71,8 @@ model Posts {
   user_id     Int 
   description String?   @db.Text()
   post_img    String?   @db.VarChar()
-  likes       Int
-  dislikes    Int  
+  likes       Int       @db.Integer()
+  dislikes    Int       @db.Integer()
   threads     Threads[]      
   
   @@map("posts")
