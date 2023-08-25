@@ -19,7 +19,7 @@ export const threadSchemaResponse = threadSchema
     }),
   })
   .omit({
-    ad_id: true,
+    post_id: true,
     user_id: true,
   });
 

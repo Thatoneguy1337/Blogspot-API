@@ -22,6 +22,7 @@ model Users {
   id             Int        @id @default(autoincrement())
   fullname       String     @db.VarChar(127)
   username       String     @db.VarChar(127)
+  created_at     DateTime   @default(now())
   email          String     @unique @db.VarChar(127)
   user_img       String     @db.VarChar(270)
   bg_img         String     @db.VarChar(270)
@@ -65,6 +66,7 @@ model Threads {
 
 model Posts {
   id          Int   @id @default(autoincrement())
+  posted_at   DateTime @default(now())
   user_post   Users @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id     Int 
   description String?   @db.Text()
