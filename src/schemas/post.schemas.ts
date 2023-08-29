@@ -13,8 +13,8 @@ const postSchema = z.object({
       user_img: z.string(),
       description: z.string(),
     }).nullish(),
-    description: z.string().max(270).nullable(),
-    post_img: z.string().nullable(),
+    description: z.string().max(270),
+    post_img: z.string(),
     likes: z.number().default(0),
     dislikes: z.number().default(0)
 })

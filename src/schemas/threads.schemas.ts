@@ -1,20 +1,20 @@
 import {z} from "zod";
 
-export const threadSchema = z.object({
+const threadSchema = z.object({
    id: z.number(),
    created_at: z.string(),
    edited:z.boolean().default(false),
-   description:z.string().max(270),
+   description:z.string(),
    comment_img:z.string(),
    post_id:z.number(),
-   user_id:z.number()
+   user_id:z.number(),
 })
 
-export const threadSchemaResponse = threadSchema
+const threadSchemaResponse = threadSchema
   .extend({
     user: z.object({
       id: z.number(),
-      name: z.string(),
+      username: z.string(),
       user_img: z.string(),
     }),
   })
@@ -23,6 +23,24 @@ export const threadSchemaResponse = threadSchema
     user_id: true,
   });
 
+  const threadSchemaRequest = threadSchema.omit({
+    id: true,
+    created_at: true,
+    username: true,
+    edited: true,
+    user_id: true,
+    post_id: true,
+  });
+  
+  const manyThreadsSchemaResponse = z.array(threadSchema);
+  
+  const threadSchemaUpdate = threadSchemaRequest; 
 
+  export {
+    threadSchema, 
+    threadSchemaResponse, 
+    threadSchemaRequest, 
+    manyThreadsSchemaResponse, 
+    threadSchemaUpdate }
 
 

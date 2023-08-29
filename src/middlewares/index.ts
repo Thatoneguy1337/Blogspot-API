@@ -4,8 +4,10 @@ import { validateUserExistsMiddleware } from "./ValidateUser.middlewares";
 import { validateDataMiddleware } from "./ValidateData.middlewares";
 import { validateAuthMiddleware } from "./ValidateAuthorization.middlewares";
 import { validateUserOwnerMiddleware } from "./ValidateOwner.middlewares";
-import { validateOwnerPostMiddleware } from "./validateOwnerPost.middlewares";
 import { validatePostExistsMiddleware } from "./ValidatePostExists.middlewares";
+import { validateOwnerPostMiddleware } from "./ValidateOwnerPost.middlewares";
+import { validateIsOwnerThreadMiddleware } from "./ValidateOwnerComment.middlewares";
+import { validateThreadExistsMiddleware } from "./ValidateComment.middlewares";
 export {
     validateDataMiddleware,
     validateEmailExistsMiddleware,
@@ -14,5 +16,7 @@ export {
     validateUserOwnerMiddleware,
     validateAuthMiddleware,
     validateOwnerPostMiddleware,
-    validatePostExistsMiddleware
-}
+    validatePostExistsMiddleware,
+    validateIsOwnerThreadMiddleware,
+    validateThreadExistsMiddleware
+};

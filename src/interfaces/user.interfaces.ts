@@ -6,7 +6,6 @@ import {
     resetEmailSchema,
     manyUsersSchemaResponse
   } from "../schemas/user.schemas";
-import { type } from "os";
   
   export type TUser = z.infer<typeof userSchema>;
   
