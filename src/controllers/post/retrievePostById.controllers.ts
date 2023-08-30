@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { TPostResponse, TPostUpdate } from "../../interfaces/post.interfaces";
+import { TPostResponse } from "../../interfaces/post.interfaces";
 import { findPostbyIdService } from "../../services/posts/retrievePostById.services";
 
 export const retrievePostByIdController = async (

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { TPostResponse, TPostUpdate } from "../../interfaces/post.interfaces";
+import { TPostResponse } from "../../interfaces/post.interfaces";
 import { listPostUserService } from "../../services/posts/retrieveAllPostsUsers.services";
 
 export const listAllPostUserController = async (

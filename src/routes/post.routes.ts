@@ -39,5 +39,5 @@ postRoutes.patch(
   validateDataMiddleware(postSchemaUpdate),
   updatePostController
 );
-postRoutes.delete("/:id", deletePostController);
+postRoutes.delete("/:id", validateOwnerPostMiddleware, deletePostController);
 
