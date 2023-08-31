@@ -1,5 +1,5 @@
 import { prisma } from "../../server";
-import { Threads } from "@prisma/client";
+import { Posts } from "@prisma/client";
 import { postThreadsResponse } from "../../schemas/post.schemas";
 import { TThreadsUpdateRequest, TThreadResponse } from "../../interfaces/thread.interfaces"; 
 import { TPostThreads} from "../../interfaces/post.interfaces";
@@ -7,7 +7,7 @@ import { TPostThreads} from "../../interfaces/post.interfaces";
 export const listAllPostThreadsService = async (
   postId: number
 ): Promise<TPostThreads> => {
-  const threads: Threads | null = await prisma.threads.findUnique({
+  const threads: Posts | null = await prisma.posts.findUnique({
     where: {
       id: postId,
     },
