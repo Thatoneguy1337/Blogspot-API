@@ -1,6 +1,10 @@
 -- CreateTable
 CREATE TABLE "followers" (
-    "user_id" INTEGER NOT NULL
+    "id" SERIAL NOT NULL,
+    "user_id" INTEGER NOT NULL,
+    "is_following" BOOLEAN NOT NULL,
+
+    CONSTRAINT "followers_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -8,6 +12,7 @@ CREATE TABLE "users" (
     "id" SERIAL NOT NULL,
     "fullname" VARCHAR(127) NOT NULL,
     "username" VARCHAR(127) NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "email" VARCHAR(127) NOT NULL,
     "user_img" VARCHAR(270) NOT NULL,
     "bg_img" VARCHAR(270) NOT NULL,
@@ -44,6 +49,7 @@ CREATE TABLE "threads" (
 -- CreateTable
 CREATE TABLE "posts" (
     "id" SERIAL NOT NULL,
+    "posted_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "user_id" INTEGER NOT NULL,
     "description" TEXT,
     "post_img" VARCHAR,

@@ -11,8 +11,10 @@ datasource db {
 }
 
 model Followers {
+  id          Int        @id @default(autoincrement())
   user        Users?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id     Int      @unique
+  is_following Boolean @db.Boolean()
   @@map("followers")
 }
 
