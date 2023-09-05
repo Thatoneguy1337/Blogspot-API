@@ -34,7 +34,6 @@ model Users {
   birthdate      String     @db.VarChar(10)
   description    String     @db.Text()
   is_banned      Boolean    @db.Boolean()
-  is_active      Boolean    @db.Boolean()
   is_moderator   Boolean    @db.Boolean()
   zip_code       String     @db.VarChar(8)
   state          String     @db.VarChar(127)

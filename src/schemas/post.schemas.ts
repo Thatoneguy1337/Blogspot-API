@@ -4,7 +4,7 @@ import { threadSchema, threadSchemaResponse } from "./threads.schemas";
 
 const postSchema = z.object({
     id: z.number(),
-    posted_at: z.string(),
+    posted_at: z.date(),
     user_post:  z
     .object({
       id: z.number(),
@@ -14,13 +14,14 @@ const postSchema = z.object({
       description: z.string(),
     }).nullish(),
     description: z.string().max(270),
-    post_img: z.string(),
+    post_img: z.string().default(""),
     likes: z.number().default(0),
     dislikes: z.number().default(0)
 })
 
 const postSchemaRequest = postSchema.omit({
     id: true,  
+    posted_at: true,
     user_id: true,
     user_post:true,
     threads: true,
@@ -33,13 +34,14 @@ const manyPostSchemaResponse = z.array(postSchemaResponse);
 const postSchemaUpdate = postSchema
 .omit({
   id: true,
+  posted_at:true,
   user_id: true,
   user_post: true,
 })
 .deepPartial();
 
 const postThreadsResponse = z.object({
-  comments: z.array(threadSchemaResponse),
+  threads: z.array(threadSchemaResponse),
 });
 
 export {

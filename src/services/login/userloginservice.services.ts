@@ -13,7 +13,7 @@ export const createTokenService = async ({
   const user: Users | null = await prisma.users.findFirst({
     where: {
       email,
-    },
+    }
   });
 
   if (!user) {
@@ -35,5 +35,5 @@ export const createTokenService = async ({
     }
   );
 
-  return { token: token, user_id: user.id };
+  return { token: token, user_id: user.id};
 };

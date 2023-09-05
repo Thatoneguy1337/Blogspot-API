@@ -33,11 +33,12 @@ postRoutes.post(
   validateDataMiddleware(postSchemaRequest),
   createPostController
 );
-postRoutes.use("/:id", validatePostExistsMiddleware, validateUserOwnerMiddleware);
+
 postRoutes.patch(
   "/:id",
   validateDataMiddleware(postSchemaUpdate),
   updatePostController
-);
+  );
 postRoutes.delete("/:id", validateOwnerPostMiddleware, deletePostController);
-
+  
+postRoutes.use("/:id", validatePostExistsMiddleware, validateUserOwnerMiddleware);
