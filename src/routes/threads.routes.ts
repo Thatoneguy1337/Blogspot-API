@@ -9,6 +9,7 @@ import {
 import { 
     validateAuthMiddleware, 
     validateDataMiddleware, 
+    validatePostExistsMiddleware,
     validateThreadExistsMiddleware,
     validateIsOwnerThreadMiddleware,
  } from "../middlewares";
@@ -27,7 +28,7 @@ import { threadSchemaRequest,
       threadRoutes.post(
         "/:id",
         validateAuthMiddleware,
-        validateThreadExistsMiddleware,
+        validatePostExistsMiddleware,
         validateDataMiddleware(threadSchemaRequest),
         createThreadController
       );

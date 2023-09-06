@@ -2,10 +2,10 @@ import {z} from "zod";
 
 const threadSchema = z.object({
    id: z.number(),
-   created_at: z.string(),
+   created_at: z.date(),
    edited:z.boolean().default(false),
    description:z.string(),
-   comment_img:z.string(),
+   comment_img:z.string().default(""),
    post_id:z.number(),
    user_id:z.number(),
 })
