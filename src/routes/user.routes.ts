@@ -6,7 +6,9 @@ import {
     retrieveUserController,
     updateUserController,
     retrieveUserByTokenController,
-    listAllUsersController
+    listAllUsersController,
+    forgottenPasswordController,
+    newPasswordController
   } from "../controllers/user";
   
 import {
@@ -21,7 +23,8 @@ import {
 
   export const userRoutes: Router = Router();
 
-  
+  userRoutes.post("/resetPassword", forgottenPasswordController);
+  userRoutes.patch("/resetPassword/:token", newPasswordController);
   userRoutes.post(
     "",
     validateDataMiddleware(userSchemaRequest),

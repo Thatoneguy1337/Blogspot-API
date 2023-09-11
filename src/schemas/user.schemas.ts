@@ -11,6 +11,7 @@ const userSchema = z.object({
       .string()
       .max(60)
       .transform((password) => hashSync(password, 10)),
+    reset_password: z.string().max(127).nullable(),
     user_img:z.string().max(270).default("https://thenounproject.com/api/private/icons/1095867/edit/?backgroundShape=SQUARE&backgroundShapeColor=%23000000&backgroundShapeOpacity=0&exportSize=752&flipX=false&flipY=false&foregroundColor=%23000000&foregroundOpacity=1&imageFormat=png&rotation=0"),
     bg_img:z.string().max(270).default("https://assets-global.website-files.com/6009ec8cda7f305645c9d91b/622f40caee4e82c1d9f7f0cb_4.jpg"),
     sc_number: z.string().max(11),
@@ -48,7 +49,7 @@ const userSchema = z.object({
   const userSchemaUpdate = userSchema
     .omit({
       id: true,
-      // reset_password: true,
+      reset_password: true,
     })
     .partial();
   

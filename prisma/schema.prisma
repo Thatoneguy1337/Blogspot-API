@@ -29,6 +29,7 @@ model Users {
   user_img       String     @db.VarChar(270)
   bg_img         String     @db.VarChar(270)
   password       String     @db.VarChar(60)
+  reset_password String?    @db.VarChar(127)
   sc_number      String     @unique @db.VarChar(11)
   telephone      String     @db.VarChar(11)
   birthdate      String     @db.VarChar(10)
