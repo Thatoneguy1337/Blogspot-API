@@ -7,7 +7,6 @@ export const newPasswordController = async (
 ): Promise<Response> => {
   const { password } = req.body;
   const { token } = req.params;
-  console.log(password, token);
   await newPasswordService(password, token);
 
   return res.status(200).json({ message: "password alterated with sucess" });
