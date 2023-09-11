@@ -20,7 +20,7 @@ export const validateUserOwnerMiddleware = async (req: Request, res: Response, n
    throw new AppError("You don't have the necessary credentials", 403);
   }
 
-  if (user.id !== userLocal) {
+  else if (user.id !== userLocal) {
     throw new AppError("You don't have the necessary credentials", 403);
   }
 
