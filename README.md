@@ -48,9 +48,11 @@ npm run dev
 | PATCH       | Update posts           | `/post/:id`                   | Authenticated           |
 | DELETE      | Delete posts           | `/post/:id`                   | Authenticated           |
 | POST        | Post thread            | `/threads/:post_id`           | Authenticated           |
-| GET         | Get thread             | `/threads/:post_id`           |  No Authentication      |
+| GET         | Get thread             | `/threads/:post_id`           | No Authentication       |
 | PATCH       | Patch thread           | `/threads/:post_id`           | Authenticated           |
 | DELETE      | Delete thread          | `/threads/:post_id`           | Authenticated           |
+| POST        | Add follower           | `/followers/:user_id`         | Authenticated           |
+| DELETE      | Remove follower        | `/followers/:user_id`         | Authenticated           |
 
 
  
