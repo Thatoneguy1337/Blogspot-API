@@ -10,15 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Followers {
-  id          Int        @id @default(autoincrement())
-  user        Users?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  user_id     Int      @unique
-  is_following Boolean @db.Boolean()
-  @@map("followers")
-}
-
-
 
 model Users {
   id             Int        @id @default(autoincrement())
@@ -41,12 +32,25 @@ model Users {
   city           String     @db.VarChar(127)
   street         String     @db.VarChar(127)
   number         String     @db.VarChar(127)
-  posts          Posts[]   
+  posts          Posts[]
   threads        Threads[]
-  followers      Followers[]
+  followers      Followers[] @relation("UserFollowers")
+  following      Followers[] @relation("UserFollowing")
 
   @@map("users")
 }
+
+model Followers {
+  id          Int      @id @default(autoincrement())
+  followerId  Int
+  follower    Users    @relation("UserFollowers", fields: [followerId], references: [id])
+  followingId Int
+  following   Users    @relation("UserFollowing", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
+}
+
+
 
 model Threads {
   id          Int      @id @default(autoincrement())

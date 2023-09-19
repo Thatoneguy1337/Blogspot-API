@@ -15,4 +15,4 @@ app.use("/user", userRoutes);
 app.use("/login", loginRoutes);
 app.use("/post", postRoutes);
 app.use("/threads", threadRoutes);
-app.use("/followers", followRoutes);
+app.use("/follow", followRoutes);

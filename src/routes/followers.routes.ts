@@ -23,8 +23,8 @@ validatePostExistsMiddleware
 export const followRoutes: Router = Router();
 
 followRoutes.get("/:id", validateAuthMiddleware, listAllFollowerControler);
-followRoutes.post("/:id", validateAuthMiddleware, createFollowerController);
-followRoutes.delete("unfollow/:id", validateAuthMiddleware, deleteFollowerController);
+followRoutes.post("/add/:userId/:followerId", validateAuthMiddleware, createFollowerController);
+followRoutes.delete("/delete/:userId/:followerId", validateAuthMiddleware, deleteFollowerController);
 
 
 

@@ -1,23 +1,27 @@
+
 import { Followers } from "@prisma/client";
 import { prisma } from "../../server";
 import { manyFollowersSchemaResponse } from "../../schemas/follower.schemas";
-import { TFollowResponse } from "../../interfaces/follower.interfaces";
+import { TManyFollowersResponse } from "../../interfaces/follower.interfaces";
 
 export const listFollowersServices = async (
     userId: number
-    ): Promise<TFollowResponse[]> => {
+    ): Promise<TManyFollowersResponse> => {
 
-    const followers: Followers[] = await prisma.followers.findMany({
-
-      where: {
-        user_id:userId
-      },
-      orderBy: [
-        {
-          user_id: "asc",
+  const followers = await prisma.followers.findMany({
+    where: {
+      followingId: userId,
+    },
+    select: {
+      follower: {
+        select: {
+          id: true,
+          username: true,
+          user_img: true,
         },
-      ],
-    });
+      },
+    },
+  });
     
     return manyFollowersSchemaResponse.parse(followers);
 

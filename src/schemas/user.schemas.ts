@@ -1,5 +1,6 @@
 import {z} from "zod";
 import { hashSync } from "bcryptjs";
+import { followerSchemaResponse } from "./follower.schemas";
 
 
 const userSchema = z.object({
@@ -52,12 +53,18 @@ const userSchema = z.object({
       reset_password: true,
     })
     .partial();
+
+  
+  const userFollowersResponse = z.object({
+      followers: z.array(followerSchemaResponse),
+    });  
   
   export {
     userSchema,
     userSchemaRequest,
     userSchemaResponse,
     manyUsersSchemaResponse,
+    userFollowersResponse,
     userSchemaUpdate,
     resetEmailSchema,
   };

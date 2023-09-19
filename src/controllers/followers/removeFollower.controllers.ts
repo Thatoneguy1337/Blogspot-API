@@ -6,8 +6,8 @@ export const deleteFollowerController = async (
   res: Response
 ): Promise<Response> => {
   const followerId: number = Number(req.params.id);
-
-  await removeFollowerService(followerId);
+  const userId : number = Number(req.params.id);
+  await removeFollowerService(followerId, userId);
 
   return res.status(204).send();
 };

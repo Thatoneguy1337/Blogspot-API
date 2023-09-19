@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { TFollowResponse } from "../../interfaces/follower.interfaces";
 import { listFollowersServices } from "../../services/follower/retrieveFollower.services";
 
 export const listAllFollowerControler = async(
@@ -9,7 +8,7 @@ export const listAllFollowerControler = async(
 
     const userId: number = Number(req.params.id);
 
-    const allFollowers: TFollowResponse[] = await listFollowersServices(userId);
-
+    const allFollowers = await listFollowersServices(userId) 
+    
     return res.json(allFollowers)
 }

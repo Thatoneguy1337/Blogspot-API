@@ -2,13 +2,18 @@ import { z } from "zod";
 
     const followerSchema = z.object({
       id:z.number(), 
-      user_id:z.number(),
-      user: z.object({
+      follower_id:z.number(),
+      followers: z.object({
         id: z.number(),
         username: z.string(),
         user_img: z.string()
       }),
-      is_following:z.boolean().default(false)
+      following_id:z.boolean().default(false),
+      following: z.object({
+        id:z.number(),
+        username:z.string(),
+        user_img:z.string()
+      })
 
     });
     
@@ -16,20 +21,18 @@ import { z } from "zod";
 
     const followerSchemaRequest = followerSchema.omit({
         id:true,
-        user_id:true,
-        is_following:true
+        follower_id:true,
+        following_id:true,
     })
 
    const manyFollowersSchemaResponse = z.array(followerSchema);
    
-   const followerSchemaUpdate = followerSchemaRequest;
 
    export {
    followerSchema,
    followerSchemaResponse,
    followerSchemaRequest,
-   manyFollowersSchemaResponse,
-   followerSchemaUpdate }
+   manyFollowersSchemaResponse }
 
 
 
