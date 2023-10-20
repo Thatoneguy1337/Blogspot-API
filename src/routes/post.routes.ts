@@ -7,7 +7,8 @@ import {
     listAllPostsController,
     updatePostController,
     deletePostController,
-    retrievePostByIdController 
+    retrievePostByIdController,
+    likePostController
 } from "../controllers/post";
 
 import 
@@ -19,7 +20,8 @@ validateUserExistsMiddleware,
 validateUserOwnerMiddleware,
 validateAuthMiddleware,
 validateOwnerPostMiddleware,
-validatePostExistsMiddleware
+validatePostExistsMiddleware,
+checkLikePermission 
  } from "../middlewares/index"
 
 export const postRoutes: Router = Router();
@@ -33,6 +35,8 @@ postRoutes.post(
   validateDataMiddleware(postSchemaRequest),
   createPostController
 );
+
+postRoutes.patch("/posts/:id/like", likePostController);
 
 postRoutes.patch(
   "/:id",

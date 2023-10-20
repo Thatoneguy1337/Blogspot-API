@@ -12,17 +12,19 @@ export const listFollowersServices = async (
     where: {
       followingId: userId,
     },
-    select: {
-      follower: {
-        select: {
-          id: true,
-          username: true,
-          user_img: true,
+      include: {
+        follower: {
+          select: {
+            id: true,
+            username: true,
+            user_img: true,
+          },
         },
       },
-    },
+
+
   });
-    
+    console.log('Resposta bruta do Prisma:', followers);
     return manyFollowersSchemaResponse.parse(followers);
 
 }

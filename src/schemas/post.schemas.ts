@@ -17,7 +17,7 @@ const postSchema = z.object({
     post_img: z.string().default(""),
     likes: z.number().default(0),
     dislikes: z.number().default(0)
-})
+});
 
 const postSchemaRequest = postSchema.omit({
     id: true,  
@@ -25,7 +25,7 @@ const postSchemaRequest = postSchema.omit({
     user_id: true,
     user_post:true,
     threads: true,
-})
+});
 
 const postSchemaResponse = postSchema;
 

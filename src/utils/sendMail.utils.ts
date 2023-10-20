@@ -21,7 +21,7 @@ class EmailService {
         html: text,
       })
       .then(() => {
-        console.log("Email send with sucess");
+        console.log("Email sent with sucess");
       })
       .catch((err) => {
         console.log(err);
@@ -37,7 +37,7 @@ class EmailService {
     const mailGenerator = new Mailgen({
       theme: "default",
       product: {
-        name: "Motor Shop",
+        name: "Social-Media",
         link: "http://localhost:5173",
       },
     });

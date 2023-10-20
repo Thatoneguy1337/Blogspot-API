@@ -21,7 +21,7 @@ model Users {
   bg_img         String     @db.VarChar(270)
   password       String     @db.VarChar(60)
   reset_password String?    @db.VarChar(127)
-  sc_number      String     @unique @db.VarChar(11)
+  ssc_number     String     @unique @db.VarChar(11)
   telephone      String     @db.VarChar(11)
   birthdate      String     @db.VarChar(10)
   description    String     @db.Text()
@@ -43,11 +43,11 @@ model Users {
 model Followers {
   id          Int      @id @default(autoincrement())
   followerId  Int
-  follower    Users    @relation("UserFollowers", fields: [followerId], references: [id])
+  follower    Users?    @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
   followingId Int
-  following   Users    @relation("UserFollowing", fields: [followingId], references: [id])
+  following   Users?    @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
 
-  @@unique([followerId, followingId])
+  @@map("followers")
 }
 
 

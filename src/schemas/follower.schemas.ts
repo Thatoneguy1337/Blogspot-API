@@ -1,29 +1,37 @@
 import { z } from "zod";
+import { userSchema } from "./user.schemas";
 
-    const followerSchema = z.object({
-      id:z.number(), 
-      follower_id:z.number(),
-      followers: z.object({
-        id: z.number(),
-        username: z.string(),
-        user_img: z.string()
-      }),
-      following_id:z.boolean().default(false),
-      following: z.object({
+ 
+  const followerSchema = z.object({
+    id: z.number(),
+    followerId: z.number(),
+    followingId: z.number()
+  });
+    
+  const followerSchemaResponse = followerSchema
+    .extend({
+      follower:z.object({
         id:z.number(),
         username:z.string(),
-        user_img:z.string()
-      })
-
-    });
-    
-    const followerSchemaResponse = followerSchema;
+        user_img:z.string(),
+      }),
+      
+      following:z.object({
+        id:z.number(),
+        username:z.string(),
+        user_img:z.string(),
+      }),
+     })
+     .omit({
+      followerId: true,
+      followingId: true
+     });
 
     const followerSchemaRequest = followerSchema.omit({
         id:true,
-        follower_id:true,
-        following_id:true,
-    })
+        followerId:true,
+        followingId:true,
+    });
 
    const manyFollowersSchemaResponse = z.array(followerSchema);
    

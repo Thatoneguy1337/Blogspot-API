@@ -1,13 +1,4 @@
 -- CreateTable
-CREATE TABLE "followers" (
-    "id" SERIAL NOT NULL,
-    "user_id" INTEGER NOT NULL,
-    "is_following" BOOLEAN NOT NULL,
-
-    CONSTRAINT "followers_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "users" (
     "id" SERIAL NOT NULL,
     "fullname" VARCHAR(127) NOT NULL,
@@ -17,12 +8,12 @@ CREATE TABLE "users" (
     "user_img" VARCHAR(270) NOT NULL,
     "bg_img" VARCHAR(270) NOT NULL,
     "password" VARCHAR(60) NOT NULL,
-    "sc_number" VARCHAR(11) NOT NULL,
+    "reset_password" VARCHAR(127),
+    "ssc_number" VARCHAR(11) NOT NULL,
     "telephone" VARCHAR(11) NOT NULL,
     "birthdate" VARCHAR(10) NOT NULL,
     "description" TEXT NOT NULL,
     "is_banned" BOOLEAN NOT NULL,
-    "is_active" BOOLEAN NOT NULL,
     "is_moderator" BOOLEAN NOT NULL,
     "zip_code" VARCHAR(8) NOT NULL,
     "state" VARCHAR(127) NOT NULL,
@@ -31,6 +22,15 @@ CREATE TABLE "users" (
     "number" VARCHAR(127) NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Followers" (
+    "id" SERIAL NOT NULL,
+    "followerId" INTEGER NOT NULL,
+    "followingId" INTEGER NOT NULL,
+
+    CONSTRAINT "Followers_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -60,16 +60,19 @@ CREATE TABLE "posts" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "followers_user_id_key" ON "followers"("user_id");
-
--- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_sc_number_key" ON "users"("sc_number");
+CREATE UNIQUE INDEX "users_ssc_number_key" ON "users"("ssc_number");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Followers_followerId_followingId_key" ON "Followers"("followerId", "followingId");
 
 -- AddForeignKey
-ALTER TABLE "followers" ADD CONSTRAINT "followers_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Followers" ADD CONSTRAINT "Followers_followerId_fkey" FOREIGN KEY ("followerId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Followers" ADD CONSTRAINT "Followers_followingId_fkey" FOREIGN KEY ("followingId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "threads" ADD CONSTRAINT "threads_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
