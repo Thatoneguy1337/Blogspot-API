@@ -42,9 +42,9 @@ model Users {
 
 model Followers {
   id          Int      @id @default(autoincrement())
-  followerId  Int
+  followerId  Int?
   follower    Users?    @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
-  followingId Int
+  followingId Int?
   following   Users?    @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
 
   @@map("followers")

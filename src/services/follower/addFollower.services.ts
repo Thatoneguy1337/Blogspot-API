@@ -37,6 +37,9 @@ export const addFollowerService = async (
       followerId: userId,
       followingId: followerId,
     },
+    include: {
+      follower: true
+    }
   });
   console.log('resposta bruta do prisma', newFollower)
   return followerSchemaResponse.parse(newFollower);

@@ -24,7 +24,7 @@ export const followRoutes: Router = Router();
 
 followRoutes.get("/:id",listAllFollowerControler);
 followRoutes.post("/add/:userId/:followerId", validateAuthMiddleware, createFollowerController);
-followRoutes.delete("/delete/:followerId", validateAuthMiddleware, deleteFollowerController);
+followRoutes.delete("/unfollow/:id", validateAuthMiddleware, deleteFollowerController);
 
 
 
