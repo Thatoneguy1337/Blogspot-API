@@ -1,32 +1,32 @@
 import { prisma } from "../../server";
-import { Posts } from "@prisma/client";
+import { Likes } from "@prisma/client";
 import {
-  TPostResponse,
-  TPostUpdateRequest
-} from "../../interfaces/post.interfaces";
-import { postSchemaResponse } from "../../schemas/post.schemas";
+  TlikePostResponse,
+  TLikeSchemaRequest
+} from "../../interfaces/likePost.interfaces";
+import { likePostSchemaResponse } from "../../schemas/likePost.schemas";
 
 
 export const likePostService = async (
-    data: TPostUpdateRequest,
-    postId: number
-  ): Promise<TPostResponse> => {
+    data: TLikeSchemaRequest,
+    postId: number,
+    userId: number
+  ): Promise<TlikePostResponse> => {
 
-  const likes = typeof data.likes === 'number' ? data.likes + 1 : 1;
-  const dislikes = typeof data.dislikes === 'number' ? data.dislikes : 0;
-
-  const updatedPost: Posts = await prisma.posts.update({
-      where: { id: postId },
+  const likedPost: Likes = await prisma.likes.create({
       data: {
         ...data,
-        likes, 
-        dislikes
+        post_id: postId,
+        user_id: userId,
+        
       },
-
+      include: {
+        user:true,
+      }
       
   });
   
-    return postSchemaResponse.parse(updatedPost);
+    return likePostSchemaResponse.parse(likedPost);
   };
 
 

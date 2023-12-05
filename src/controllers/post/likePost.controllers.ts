@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { TPostResponse, TPostUpdateRequest } from "../../interfaces/post.interfaces";
+import { TlikePostResponse } from "../../interfaces/likePost.interfaces";
 import { likePostService } from "../../services/posts/likePost.services";
 
 
@@ -8,12 +8,14 @@ export const likePostController = async (
     res: Response
   ): Promise<Response> => {
     const postId: number = Number(req.params.id);
-    const updatedValues: TPostUpdateRequest = req.body;
+    const userId: number = Number(res.locals.userId);
+    const likeData = req.body;
 
-   const updatedAds: TPostResponse = await likePostService(
-      updatedValues,
+   const likedPosts: TlikePostResponse = await likePostService(
+      likeData,
+      userId,
       postId
     );
   
-    return res.json(updatedAds);
+    return res.status(201).json(likedPosts);
   };

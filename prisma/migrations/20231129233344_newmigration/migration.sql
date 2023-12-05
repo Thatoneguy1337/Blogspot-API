@@ -25,12 +25,12 @@ CREATE TABLE "users" (
 );
 
 -- CreateTable
-CREATE TABLE "Followers" (
+CREATE TABLE "followers" (
     "id" SERIAL NOT NULL,
-    "followerId" INTEGER NOT NULL,
-    "followingId" INTEGER NOT NULL,
+    "followerId" INTEGER,
+    "followingId" INTEGER,
 
-    CONSTRAINT "Followers_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "followers_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -53,10 +53,18 @@ CREATE TABLE "posts" (
     "user_id" INTEGER NOT NULL,
     "description" TEXT,
     "post_img" VARCHAR,
-    "likes" INTEGER NOT NULL,
-    "dislikes" INTEGER NOT NULL,
 
     CONSTRAINT "posts_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "likes" (
+    "id" SERIAL NOT NULL,
+    "liked_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "post_id" INTEGER NOT NULL,
+    "user_id" INTEGER NOT NULL,
+
+    CONSTRAINT "likes_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -65,14 +73,11 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 -- CreateIndex
 CREATE UNIQUE INDEX "users_ssc_number_key" ON "users"("ssc_number");
 
--- CreateIndex
-CREATE UNIQUE INDEX "Followers_followerId_followingId_key" ON "Followers"("followerId", "followingId");
+-- AddForeignKey
+ALTER TABLE "followers" ADD CONSTRAINT "followers_followerId_fkey" FOREIGN KEY ("followerId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Followers" ADD CONSTRAINT "Followers_followerId_fkey" FOREIGN KEY ("followerId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Followers" ADD CONSTRAINT "Followers_followingId_fkey" FOREIGN KEY ("followingId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "followers" ADD CONSTRAINT "followers_followingId_fkey" FOREIGN KEY ("followingId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "threads" ADD CONSTRAINT "threads_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -82,3 +87,9 @@ ALTER TABLE "threads" ADD CONSTRAINT "threads_user_id_fkey" FOREIGN KEY ("user_i
 
 -- AddForeignKey
 ALTER TABLE "posts" ADD CONSTRAINT "posts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "likes" ADD CONSTRAINT "likes_post_id_fkey" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "likes" ADD CONSTRAINT "likes_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

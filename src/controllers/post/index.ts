@@ -5,6 +5,9 @@ import { listAllPostsController } from "./retrievePost.controllers";
 import { updatePostController } from "./updatePost.controllers";
 import { retrievePostByIdController } from "./retrievePostById.controllers";
 import { likePostController } from "./likePost.controllers";
+import {deleteLikePostController} from "./removeLikePost.controllers";
+import { listAllLikePostController } from "./retrieveLikePost.controllers";
+
 
 export 
 {
@@ -14,5 +17,7 @@ listAllPostUserController,
 listAllPostsController,
 updatePostController,
 retrievePostByIdController,
-likePostController
+likePostController,
+deleteLikePostController,
+listAllLikePostController
 }

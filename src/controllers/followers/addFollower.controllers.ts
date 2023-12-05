@@ -7,8 +7,8 @@ export const createFollowerController = async (
     res: Response
 ): Promise<Response> => {
   
-  const userId:number = Number(req.params.userId);
-  const followerId:number = Number(req.params.followerId);
+  const userId:number = Number(res.locals.userId);
+  const followerId:number = Number(req.params.id);
   const newFollower: TFollowResponse = await addFollowerService(
    userId,
    followerId

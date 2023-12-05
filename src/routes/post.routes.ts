@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { postSchemaRequest, postSchemaUpdate } from "../schemas/post.schemas";
 
+
 import { 
     createPostController, 
     listAllPostUserController, 
@@ -8,7 +9,9 @@ import {
     updatePostController,
     deletePostController,
     retrievePostByIdController,
-    likePostController
+    likePostController,
+    deleteLikePostController,
+    listAllLikePostController
 } from "../controllers/post";
 
 import 
@@ -21,7 +24,7 @@ validateUserOwnerMiddleware,
 validateAuthMiddleware,
 validateOwnerPostMiddleware,
 validatePostExistsMiddleware,
-checkLikePermission 
+checkLikePermission, 
  } from "../middlewares/index"
 
 export const postRoutes: Router = Router();
@@ -35,14 +38,12 @@ postRoutes.post(
   validateDataMiddleware(postSchemaRequest),
   createPostController
 );
-
-postRoutes.patch("/posts/:id/like", likePostController);
-
+postRoutes.post("/:id/like", validateAuthMiddleware, likePostController);
 postRoutes.patch(
   "/:id",
   validateDataMiddleware(postSchemaUpdate),
   updatePostController
   );
 postRoutes.delete("/:id", validateOwnerPostMiddleware, deletePostController);
-  
-postRoutes.use("/:id", validatePostExistsMiddleware, validateUserOwnerMiddleware);
+postRoutes.delete("/:id/like", deleteLikePostController);
+postRoutes.get("/:id/like", listAllLikePostController);

@@ -4,8 +4,9 @@ import {
     postSchemaRequest, 
     postSchemaResponse,
     manyPostSchemaResponse,
+    postThreadsResponse,
     postSchemaUpdate,
-    postThreadsResponse
+    postLikeResponse
  } from "../schemas/post.schemas";
 
     export type TPost = z.infer<typeof postSchema>;
@@ -21,4 +22,5 @@ import {
     export type TPostUpdateRequest = Partial<TPostRequestUpdate>;
 
     export type TPostThreads = z.infer<typeof postThreadsResponse>;
-
+    
+    export type TPostLike = z.infer<typeof postLikeResponse>;
