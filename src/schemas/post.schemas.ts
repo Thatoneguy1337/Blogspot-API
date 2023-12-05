@@ -1,6 +1,8 @@
 import {z} from "zod";
 
 import { threadSchema, threadSchemaResponse } from "./threads.schemas";
+import { likePostSchema, likePostSchemaResponse } from "./likePost.schemas";
+
 
 const postSchema = z.object({
     id: z.number(),
@@ -14,9 +16,7 @@ const postSchema = z.object({
       description: z.string(),
     }).nullish(),
     description: z.string().max(270),
-    post_img: z.string().default(""),
-    likes: z.number().default(0),
-    dislikes: z.number().default(0)
+    post_img: z.string().default("")
 });
 
 const postSchemaRequest = postSchema.omit({
@@ -44,11 +44,17 @@ const postThreadsResponse = z.object({
   threads: z.array(threadSchemaResponse),
 });
 
+const postLikeResponse = z.object({
+  likes:z.array(likePostSchema),
+})
+
+
 export {
   postSchema,
   postSchemaRequest,
   postSchemaResponse,
   manyPostSchemaResponse,
   postSchemaUpdate,
-  postThreadsResponse
+  postThreadsResponse,
+  postLikeResponse
 }

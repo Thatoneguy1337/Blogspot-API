@@ -33,6 +33,7 @@ model Users {
   street         String     @db.VarChar(127)
   number         String     @db.VarChar(127)
   posts          Posts[]
+  likes          Likes[]
   threads        Threads[]
   followers      Followers[] @relation("UserFollowers")
   following      Followers[] @relation("UserFollowing")
@@ -77,11 +78,22 @@ model Posts {
   user_id     Int 
   description String?   @db.Text()
   post_img    String?   @db.VarChar()
-  likes       Int       @db.Integer()
-  dislikes    Int       @db.Integer()
+  likes       Likes[]
   threads     Threads[]      
   
   @@map("posts")
+}
+
+
+model Likes {
+id          Int    @id @default(autoincrement())
+liked_at    DateTime @default(now())
+post        Posts? @relation(fields: [post_id], references: [id], onDelete: Cascade)
+post_id     Int
+user        Users? @relation(fields: [user_id], references: [id], onDelete: Cascade)
+user_id     Int
+
+@@map("likes")
 }
 
 
