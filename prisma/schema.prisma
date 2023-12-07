@@ -35,22 +35,19 @@ model Users {
   posts          Posts[]
   likes          Likes[]
   threads        Threads[]
-  followers      Followers[] @relation("UserFollowers")
-  following      Followers[] @relation("UserFollowing")
+  following      Follow[] @relation("UserFollowers")
 
   @@map("users")
 }
 
-model Followers {
-  id          Int      @id @default(autoincrement())
-  followerId  Int?
-  follower    Users?    @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
-  followingId Int?
-  following   Users?    @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
+model Follow {
+  id             Int      @id @default(autoincrement())
+  followed_since DateTime   @default(now())
+  user           Users?    @relation("UserFollowers", fields: [user_id], references: [id], onDelete: Cascade)
+  user_id        Int?
 
-  @@map("followers")
+  @@map("follow")
 }
-
 
 
 model Threads {

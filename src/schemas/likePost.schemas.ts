@@ -24,10 +24,11 @@ const likeSchemaRequest = likePostSchema.omit({
  liked_at: true,
  username: true,
  post_id: true,
- user_id: true
+ user_id: true,
+ user: true
 })
 
-const manyLikesSchemaResponse = z.array(likePostSchema);
+const manyLikesSchemaResponse = z.array(likePostSchemaResponse);
 
 const likeSchemaUpdate = likeSchemaRequest;
 

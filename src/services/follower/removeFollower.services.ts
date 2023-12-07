@@ -1,11 +1,11 @@
 import { prisma } from "../../server";
-import { Followers } from "@prisma/client";
+import { Follow } from "@prisma/client";
 
 
 export const removeFollowerService = async (
     followerId: number
     ): Promise<void> => {
-      await prisma.followers.delete({
+      await prisma.follow.delete({
           where: {
            id:followerId,
           },

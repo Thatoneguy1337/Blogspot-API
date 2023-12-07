@@ -1,5 +1,5 @@
 
-import { Followers } from "@prisma/client";
+import { Follow } from "@prisma/client";
 import { prisma } from "../../server";
 import { manyFollowersSchemaResponse } from "../../schemas/follower.schemas";
 import { TManyFollowersResponse } from "../../interfaces/follower.interfaces";
@@ -8,12 +8,12 @@ export const listFollowersServices = async (
     userId: number
     ): Promise<TManyFollowersResponse> => {
 
-  const followers = await prisma.followers.findMany({
+  const followers = await prisma.follow.findMany({
     where: {
-      followingId: userId,
+      user_id: userId,
     },
       include: {
-        follower: {
+        user: {
           select: {
             id: true,
             username: true,
@@ -22,9 +22,8 @@ export const listFollowersServices = async (
         },
       },
 
-
-  });
-    console.log('Resposta bruta do Prisma:', followers);
+   });
+    
     return manyFollowersSchemaResponse.parse(followers);
 
 }
