@@ -11,11 +11,6 @@ import {
     newPasswordController
   } from "../controllers/user";
   
-  import {
-    createFollowerController,
-    deleteFollowerController,
-    listAllFollowerControler
- } from "../controllers/followers"
 
 import {
     validateDataMiddleware,
@@ -49,7 +44,7 @@ import {
   );
   userRoutes.patch("/:id", validateSocialSecurityExistsMiddleware, updateUserController);
   userRoutes.delete("/:id", deleteUserController);
-  userRoutes.get("/:id", validateAuthMiddleware, listAllFollowerControler);
+ 
   
 
 
