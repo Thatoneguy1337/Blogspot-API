@@ -1,61 +1,67 @@
 import { PrismaClient } from "@prisma/client";
+import app from "../../../app";
+import supertest from "supertest";
+import { editUserRouteMock } from "../../mocks/users";
 import { createUserService, updateUserService } from "../../../services/user";
 
 
-describe( 'User function', () => {
-
+describe('PUT /users/:id (Editar usuário)', () => {
+    let token: string; 
+    let editedUserId: number; 
     let prisma: PrismaClient;
-
-    beforeAll(() => {
-        prisma = new PrismaClient();
-    })
-
+    beforeAll(async () => {
+      const loginResponse = await supertest(app)
+        .post('/login') 
+        .send(editUserRouteMock.userComplete);
+  
+      token = loginResponse.body.token;
+  
+      const createUserResponse = await supertest(app)
+        .post('/users') // Substitua pelo caminho real do seu endpoint de criação de usuário
+        .send(editUserRouteMock.userComplete);
+  
+      editedUserId = createUserResponse.body.id;
+    });
+  
     afterAll(async () => {
-        await prisma.$disconnect();
-    })
-
-    it('should edit user', async() => {
-        
-        
-        const userData = {
-        fullname: "John Doe",
-        username: "johnthedoughy89",  
-        email: "email@email.com",
-        password: "12345678",
-        reset_password: "",
-        user_img: "",
-        bg_img: "",
-        ssc_number: "",
-        telephone: "",
-        birthdate: "06/04/1989",
-        description: "",
-        is_banned: false,
-        is_moderator: true,
-        zip_code: "20068397",
-        state: "Texas",
-        city: "El Passo",
-        street: "Benson Stt",
-        number: "267",
-        }
-        
-        const newUser = await createUserService(userData);
-
-        expect(newUser).toBeDefined();
-
-
-        const editedUsers = await updateUserService(userData, newUser.id);
-
-        
-        expect(editedUsers).toEqual(userData);
-
-
-    })
-
-}
-
-
-)
-
+      await prisma.users.delete({
+        where: { id: editedUserId },
+      });
+    });
+  
+    it('Deve editar um usuário com sucesso', async () => {
+      const editedUserData = {
+        fullname: 'Cleyton Neto',
+        username: 'Cleitin',
+        email: 'novousuario@email.com',
+      };
+  
+      const response = await supertest(app)
+        .put(`/user/${editedUserId}`) // Substitua pelo caminho real da sua rota de edição
+        .set('Authorization', `Bearer ${token}`)
+        .send(editedUserData);
+  
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(expect.objectContaining(editedUserData));
+    });
+  
+    it('Deve retornar erro ao tentar editar com token inválido', async () => {
+      const editedUserData = {
+        fullname: 'Novo Nome',
+        username: 'novousuario',
+        email: 'novousuario@example.com',
+      };
+  
+      const response = await supertest(app)
+        .put(`/user/${editedUserId}`) // Substitua pelo caminho real da sua rota de edição
+        .set('Authorization', 'Bearer token_invalido')
+        .send(editedUserData);
+  
+      expect(response.status).toBe(401);
+      expect(response.body).toHaveProperty('error', 'Token inválido');
+    });
+  
+  });
 
 
 

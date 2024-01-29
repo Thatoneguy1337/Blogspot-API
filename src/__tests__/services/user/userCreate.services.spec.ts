@@ -1,91 +1,64 @@
+import supertest from 'supertest';
 import { PrismaClient } from '@prisma/client';
 import { createUserService } from "../../../services/user/createUser.services";
+import  app  from '../../../app';
+import { createUserRouteMock } from '../../mocks/users';
+import { string } from 'zod';
+  
 
+  describe( 'POST /user', ()=>{
+  
+  const baseUrl: string = '/user';
 
-describe('User functions', () => {
   let prisma: PrismaClient;
   
   beforeAll(() => {
     prisma = new PrismaClient();
-  });
+    });
+
   
+  beforeEach(async () => {
+  await prisma.users.deleteMany();
+  });
+
   afterAll(async () => {
     await prisma.$disconnect();
-  });
-  
-  it('should create a new user', async () => {
-    const fullname = "John Doe"
-    const username = "johnthedoughy89"  
-    const email = "email@email.com"
-    const password = "12345678"
-    const reset_password  = ""
-    const user_img = ""
-    const bg_img = ""
-    const ssc_number = ""
-    const telephone = ""
-    const birthdate = "06/04/1989"
-    const description = ""
-    const is_banned = false
-    const is_moderator = true
-    const zip_code = "20068397"
-    const state = "Texas"
-    const city = "El Passo"
-    const street = "Benson Stt"
-    const number = "267"
+    })
 
-      
-    const userdata = {
-        fullname, 
-        username, 
-        email, 
-        password, 
-        reset_password, 
-        user_img, 
-        bg_img, 
-        ssc_number, 
-        telephone,
-        birthdate,
-        description,
-        is_banned,
-        is_moderator,
-        zip_code,
-        state,
-        city,
-        street,
-        number
-    }
-    
-    const newUser = await createUserService(userdata);
+  it('Success: Must be able to create a user - Full body', async () => {
+    const response = await supertest(app)
+      .post(baseUrl)
+      .send(createUserRouteMock.userComplete);
 
-
-     expect(newUser).toEqual(
+    expect(response.status).toBe(201);
+        
+    expect(response.body).toEqual(
       expect.objectContaining({
-        id:1,
-        fullname, 
-        username, 
-        email, 
-        password, 
-        reset_password, 
-        user_img, 
-        bg_img, 
-        ssc_number, 
-        telephone,
-        birthdate,
-        description,
-        is_banned,
-        is_moderator,
-        zip_code,
-        state,
-        city,
-        street,
-        number
+        fullname: createUserRouteMock.userComplete.fullname,
+        username: createUserRouteMock.userComplete.username,
+        email: createUserRouteMock.userComplete.email,
+        user_img: createUserRouteMock.userComplete.user_img,
+        bg_img: createUserRouteMock.userComplete.bg_img,
+        ssc_number: createUserRouteMock.userComplete.ssc_number,
+        telephone: createUserRouteMock.userComplete.telephone,
+        birthdate: createUserRouteMock.userComplete.birthdate,
+        description: createUserRouteMock.userComplete.description,
+        is_banned: createUserRouteMock.userComplete.is_banned,
+        is_moderator: createUserRouteMock.userComplete.is_moderator,
+        zip_code: createUserRouteMock.userComplete.zip_code,
+        state: createUserRouteMock.userComplete.state,
+        city: createUserRouteMock.userComplete.city,
+        street: createUserRouteMock.userComplete.street,
+        number: createUserRouteMock.userComplete.number
       })
     );
-
     
-  });
-});
+    expect(response.body).not.toEqual(
+      expect.objectContaining({ password: expect.any(String), reset_password: expect.any(String)})
+    );  
+}, 10000);
+  
 
-
+})
 
 

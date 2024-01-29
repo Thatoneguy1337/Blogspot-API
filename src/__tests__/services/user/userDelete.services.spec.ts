@@ -1,78 +1,83 @@
+import supertest from 'supertest';
 import { PrismaClient } from "@prisma/client";
 import { createUserService } from "../../../services/user/createUser.services";
 import { deleteUserService } from "../../../services/user/deleteUser.services";
+import { Token } from "typescript";
+import app from '../../../app';
+import * as shortid from 'shortid';
 
-describe( 'User function', () => {
+describe('DELETE /user', () => {
+    let userId: number;
+    const baseUrl: string = '/user';
 
     let prisma: PrismaClient;
 
-    beforeAll(()=> {
-        prisma = new PrismaClient()
-    })
-
+    const generateSscNumber = (): string => {
+    const timestampPart = Date.now().toString().slice(-6);
+  
+    
+    const randomPart = shortid.generate().slice(-5);
+  
+    
+    const sscNumber = `${timestampPart}${randomPart}`;
+  
+    
+    return sscNumber.slice(0, 11);
+  };
+    
+    beforeAll(async () => {
+        const createdUser = await prisma.users.create({
+        data: {
+        fullname:"John Doe" , 
+        username:"johnthedoughy89" , 
+        email:`test-${Date.now()}@example.com`, 
+        password:"12345678", 
+        reset_password:"", 
+        user_img:"", 
+        bg_img:"",
+        is_banned:false,
+        is_moderator:true,
+        ssc_number:generateSscNumber(), 
+        telephone:"1122604433",
+        birthdate:"06/04/1989",
+        description:"",
+        zip_code:"20068397",
+        state:"Texas",
+        city:"El Passo",
+        street:"Benson Stt",
+        number:"267"
+        },
+          });
+      
+          userId = createdUser.id;
+      });
+  
+    
+    beforeEach(async () => {
+    await prisma.users.deleteMany();
+    });
+  
     afterAll(async () => {
-        await prisma.$disconnect();
-    })
-
-    test('should delete a user', async() => {
-        const fullname = "John Doe"
-        const username = "johnthedoughy89"  
-        const email = "email@email.com"
-        const password = "12345678"
-        const reset_password  = ""
-        const user_img = ""
-        const bg_img = ""
-        const ssc_number = ""
-        const telephone = ""
-        const birthdate = "06/04/1989"
-        const description = ""
-        const is_banned = false
-        const is_moderator = true
-        const zip_code = "20068397"
-        const state = "Texas"
-        const city = "El Passo"
-        const street = "Benson Stt"
-        const number = "267"
-    
-          
-        const userdata = {
-            fullname, 
-            username, 
-            email, 
-            password, 
-            reset_password, 
-            user_img, 
-            bg_img, 
-            ssc_number, 
-            telephone,
-            birthdate,
-            description,
-            is_banned,
-            is_moderator,
-            zip_code,
-            state,
-            city,
-            street,
-            number
-        }
-        
-        const newUser = await createUserService(userdata);
-
-        expect(newUser).toBeDefined();
-
-
-        await deleteUserService(newUser.id);
-
-        
-        const deletedUser = await prisma.users.findUnique({
-          where: {
-            id: newUser.id,
-          },
-        });
-    
-    
-        expect(deletedUser).toBeNull();
-
-    })
-
-})
+      await prisma.$disconnect();
+      })
+  
+    it('Deve deletar um usuário com sucesso', async () => {
+      const response = await supertest(app).delete(`/user/${userId}`);
+  
+      expect(response.status).toBe(204);
+  
+     
+      const deletedUser = await prisma.users.findUnique({
+        where: { id: userId },
+      });
+  
+      expect(deletedUser).toBeNull();
+    });
+  
+    it('Deve retornar 404 se o usuário não existir', async () => {
+      const nonExistentUserId = 'id_invalido';
+      const response = await supertest(app).delete(`/user/${nonExistentUserId}`);
+  
+      expect(response.status).toBe(404);
+    });
+  });

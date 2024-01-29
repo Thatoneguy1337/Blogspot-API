@@ -12,6 +12,7 @@ export const createUserController = async (
   const data: TUserRequest = req.body;
 
   const newUser: TUserResponse = await createUserService(data);
+  console.log(newUser);
 
   return res.status(201).json(newUser);
 };

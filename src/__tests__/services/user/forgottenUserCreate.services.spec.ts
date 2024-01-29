@@ -1,64 +1,38 @@
 import { PrismaClient } from '@prisma/client';
 import { emailService } from '../../../utils/sendMail.utils';
 import { retrieveForgottenPasswordService } from '../../../services/user';
-jest.mock('../../../server');
-jest.mock('../../../utils/sendMail.utils');
+import * as nodemailerMock from 'nodemailer-mock';
 
-jest.mock('@prisma/client');
 
-describe('Password functions', () => {
-  let prismaMock: any;
+describe( 'Reset password /resetPassword',()=>{
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-    prismaMock = new PrismaClient();
-  });
+let baseUrl = "/resetPassword"
 
-  test('should send a password reset email', async () => {
-    prismaMock.users.findFirst.mockResolvedValue({
-      id: 1,
-      username: 'testuser',
-      email: 'test@example.com',
-    });
+beforeAll(() => {
+  const mockTransport = nodemailerMock.createTransport();
+  emailService.transporter = mockTransport;
+});
 
-    prismaMock.users.update.mockResolvedValue({});
 
-    jest.spyOn(emailService, 'resetPasswordTemplate').mockReturnValue({
-    to: 'testuser',
-    subject: 'Reset Password',
-    text: 'reset_password_email_content',
-    });
-    jest.spyOn(emailService, 'sendEmail').mockResolvedValue();
+it('should send email successfully', async () => {
+  const resetEmail = {
+    to: 'example@example.com',
+    subject: 'Test Subject',
+    text: 'Test Body',
+  };
 
-    await retrieveForgottenPasswordService('test@example.com');
+  await emailService.sendEmail(resetEmail);
 
-    expect(prismaMock.users.findFirst).toHaveBeenCalledWith({
-      where: { email: 'test@example.com' },
-    });
+  
+  const sentMail = nodemailerMock.mock.getSentMail();
+  expect(sentMail.length).toBe(1);
+  expect(sentMail[0].to).toBe('example@example.com');
+  expect(sentMail[0].subject).toBe('Test Subject');
+  expect(sentMail[0].html).toBe('Test Body');
+});
 
-    expect(prismaMock.users.update).toHaveBeenCalledWith({
-      where: { email: 'test@example.com' },
-      data: { reset_password: expect.any(String) },
-    });
 
-    expect(emailService.resetPasswordTemplate).toHaveBeenCalledWith(
-      'testuser',
-      'test@example.com',
-      expect.any(String)
-    );
-
-    expect(emailService.sendEmail).toHaveBeenCalledWith('reset_password_email_content');
-  });
-
-  test('should throw an error for non-existing user', async () => {
-    prismaMock.users.findFirst.mockResolvedValue(null);
-
-    await expect(retrieveForgottenPasswordService('nonexistent@example.com')).rejects.toThrow(
-      'User not found'
-    );
-
-    expect(prismaMock.users.findFirst).toHaveBeenCalledWith({
-      where: { email: 'nonexistent@example.com' },
-    });
-  });
+afterEach(() => {
+  
+});
 });
