@@ -8,4 +8,9 @@ import { generateSscNumber } from "./userCreate.routes.mock";
 
 
 
-export { createUserRouteMock, listUserRouteMock, editUserRouteMock, generateSscNumber };
+export {
+    createUserRouteMock, 
+    listUserRouteMock, 
+    editUserRouteMock, 
+    deleteUserRouteMock, 
+    generateSscNumber };

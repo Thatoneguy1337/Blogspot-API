@@ -2,15 +2,17 @@ import supertest from 'supertest';
 import { PrismaClient } from "@prisma/client";
 import { createUserService } from "../../../services/user/createUser.services";
 import { deleteUserService } from "../../../services/user/deleteUser.services";
-import { Token } from "typescript";
+import jwt from 'jsonwebtoken';
 import app from '../../../app';
+import tokenMock from "../../integration/token.mock";
 import * as shortid from 'shortid';
 
 describe('DELETE /user', () => {
     let userId: number;
     const baseUrl: string = '/user';
 
-    let prisma: PrismaClient;
+    const prisma = new PrismaClient();
+
 
     const generateSscNumber = (): string => {
     const timestampPart = Date.now().toString().slice(-6);
@@ -62,8 +64,9 @@ describe('DELETE /user', () => {
       })
   
     it('Deve deletar um usuário com sucesso', async () => {
-      const response = await supertest(app).delete(`/user/${userId}`);
-  
+      const response = await supertest(app).delete(`${baseUrl}/${userId}`)
+      .set('Authorization', `Bearer ${tokenMock}`);
+      console.log(tokenMock);
       expect(response.status).toBe(204);
   
      
@@ -76,8 +79,16 @@ describe('DELETE /user', () => {
   
     it('Deve retornar 404 se o usuário não existir', async () => {
       const nonExistentUserId = 'id_invalido';
-      const response = await supertest(app).delete(`/user/${nonExistentUserId}`);
-  
+      const response = await supertest(app).delete(`${baseUrl}/${nonExistentUserId}`)
+      .set('Authorization', `Bearer ${tokenMock}`);
       expect(response.status).toBe(404);
+
+
+      const deletedUser = await prisma.users.findUnique({
+        where: { id: userId },
+      });
+    
+      expect(deletedUser).toBeNull();
+
     });
   });

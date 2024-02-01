@@ -1,6 +1,6 @@
 import { sign } from 'jsonwebtoken';
 
-const secretKey: string = '1234';
+const secretKey: string = "$3CR3T$";
 process.env.SECRET_KEY = secretKey;
 
 export default {
@@ -9,4 +9,5 @@ export default {
   },
   invalidSignature: sign({ admin: true }, 'invalid_signature'),
   jwtMalformed: '12345',
+
 };

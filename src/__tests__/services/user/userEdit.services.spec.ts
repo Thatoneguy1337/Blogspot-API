@@ -37,7 +37,7 @@ describe('PUT /users/:id (Editar usuário)', () => {
       };
   
       const response = await supertest(app)
-        .put(`/user/${editedUserId}`) // Substitua pelo caminho real da sua rota de edição
+        .put(`/user/${editedUserId}`) 
         .set('Authorization', `Bearer ${token}`)
         .send(editedUserData);
   
@@ -53,7 +53,7 @@ describe('PUT /users/:id (Editar usuário)', () => {
       };
   
       const response = await supertest(app)
-        .put(`/user/${editedUserId}`) // Substitua pelo caminho real da sua rota de edição
+        .put(`/user/${editedUserId}`) 
         .set('Authorization', 'Bearer token_invalido')
         .send(editedUserData);
   
