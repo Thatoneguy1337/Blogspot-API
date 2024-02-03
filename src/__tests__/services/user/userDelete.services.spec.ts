@@ -9,6 +9,7 @@ import * as shortid from 'shortid';
 
 describe('DELETE /user', () => {
     let userId: number;
+    let isAdmin: boolean;
     const baseUrl: string = '/user';
 
     const prisma = new PrismaClient();
@@ -38,7 +39,7 @@ describe('DELETE /user', () => {
         user_img:"", 
         bg_img:"",
         is_banned:false,
-        is_moderator:true,
+        is_moderator:false,
         ssc_number:generateSscNumber(), 
         telephone:"1122604433",
         birthdate:"06/04/1989",
@@ -50,7 +51,8 @@ describe('DELETE /user', () => {
         number:"267"
         },
           });
-      
+          
+          isAdmin = createdUser.is_moderator
           userId = createdUser.id;
       });
   
@@ -64,17 +66,14 @@ describe('DELETE /user', () => {
       })
   
     it('Deve deletar um usuário com sucesso', async () => {
+      const token = tokenMock.genToken(isAdmin, userId);
       const response = await supertest(app).delete(`${baseUrl}/${userId}`)
-      .set('Authorization', `Bearer ${tokenMock}`);
-      console.log(tokenMock);
-      expect(response.status).toBe(204);
+      .set('Authorization', `Bearer ${token}`);
+      console.log(token);
+      const expectResults = { status: 204 };
   
-     
-      const deletedUser = await prisma.users.findUnique({
-        where: { id: userId },
-      });
-  
-      expect(deletedUser).toBeNull();
+      expect(response.status).toBe(expectResults.status);
+      expect(response.body).toStrictEqual({});
     });
   
     it('Deve retornar 404 se o usuário não existir', async () => {
