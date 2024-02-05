@@ -69,7 +69,8 @@ describe('DELETE /user', () => {
       const token = tokenMock.genToken(isAdmin, userId);
       const response = await supertest(app).delete(`${baseUrl}/${userId}`)
       .set('Authorization', `Bearer ${token}`);
-      console.log(token);
+      console.log("Token de acesso:",token);
+      console.log("Id do usuário:",userId);
       const expectResults = { status: 204 };
   
       expect(response.status).toBe(expectResults.status);
