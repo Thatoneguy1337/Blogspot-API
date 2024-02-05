@@ -56,10 +56,6 @@ describe('DELETE /user', () => {
           userId = createdUser.id;
       });
   
-    
-    beforeEach(async () => {
-    await prisma.users.deleteMany();
-    });
   
     afterAll(async () => {
       await prisma.$disconnect();

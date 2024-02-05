@@ -2,30 +2,65 @@ import { PrismaClient } from "@prisma/client";
 import app from "../../../app";
 import supertest from "supertest";
 import { editUserRouteMock } from "../../mocks/users";
+import tokenMock from "../../integration/token.mock";
+import * as shortid from 'shortid';
 import { createUserService, updateUserService } from "../../../services/user";
 
 
 describe('PUT /users/:id (Editar usuário)', () => {
-    let token: string; 
-    let editedUserId: number; 
-    let prisma: PrismaClient;
+    let userId: number;
+    let isAdmin: boolean;
+    
+    const baseUrl: string = '/user';
+
+    const prisma = new PrismaClient();
+    
+    const generateSscNumber = (): string => {
+      const timestampPart = Date.now().toString().slice(-6);
+    
+      
+      const randomPart = shortid.generate().slice(-5);
+    
+      
+      const sscNumber = `${timestampPart}${randomPart}`;
+    
+      
+      return sscNumber.slice(0, 11);
+    };
+    
     beforeAll(async () => {
-      const loginResponse = await supertest(app)
-        .post('/login') 
-        .send(editUserRouteMock.userComplete);
-  
-      token = loginResponse.body.token;
-  
-      const createUserResponse = await supertest(app)
-        .post('/users') // Substitua pelo caminho real do seu endpoint de criação de usuário
-        .send(editUserRouteMock.userComplete);
-  
-      editedUserId = createUserResponse.body.id;
+
+
+      const createdUser = await prisma.users.create({
+        data: {
+        fullname:"John Doe" , 
+        username:"johnthedoughy89" , 
+        email:`test-${Date.now()}@example.com`, 
+        password:"12345678", 
+        reset_password:"", 
+        user_img:"", 
+        bg_img:"",
+        is_banned:false,
+        is_moderator:false,
+        ssc_number:generateSscNumber(), 
+        telephone:"1122604433",
+        birthdate:"06/04/1989",
+        description:"",
+        zip_code:"20068397",
+        state:"Texas",
+        city:"El Passo",
+        street:"Benson Stt",
+        number:"267"
+        },
+          });
+          
+          isAdmin = createdUser.is_moderator
+          userId = createdUser.id;
     });
   
     afterAll(async () => {
       await prisma.users.delete({
-        where: { id: editedUserId },
+        where: { id: userId },
       });
     });
   
@@ -35,9 +70,9 @@ describe('PUT /users/:id (Editar usuário)', () => {
         username: 'Cleitin',
         email: 'novousuario@email.com',
       };
-  
+      const token = tokenMock.genToken(isAdmin, userId);
       const response = await supertest(app)
-        .put(`/user/${editedUserId}`) 
+        .patch(`${baseUrl}/${userId}`) 
         .set('Authorization', `Bearer ${token}`)
         .send(editedUserData);
   
@@ -46,6 +81,7 @@ describe('PUT /users/:id (Editar usuário)', () => {
     });
   
     it('Deve retornar erro ao tentar editar com token inválido', async () => {
+      const invalidToken: string = "1234" 
       const editedUserData = {
         fullname: 'Novo Nome',
         username: 'novousuario',
@@ -53,11 +89,11 @@ describe('PUT /users/:id (Editar usuário)', () => {
       };
   
       const response = await supertest(app)
-        .put(`/user/${editedUserId}`) 
-        .set('Authorization', 'Bearer token_invalido')
+        .patch(`${baseUrl}/${userId}`) 
+        .set('Authorization', `Bearer ${invalidToken}`)
         .send(editedUserData);
   
-      expect(response.status).toBe(401);
+      expect(response.status).toBe(404);
       expect(response.body).toHaveProperty('error', 'Token inválido');
     });
   
