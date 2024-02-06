@@ -51,22 +51,25 @@ describe('PUT /users/:id (Editar usuário)', () => {
     });
   });
 
-  it('Deve editar um usuário com sucesso', async () => {
+  it('Deve pegar um usuário por id com sucesso', async () => {
+    const token = tokenMock.genToken(isAdmin, userId);
     const response = await supertest(app)
-      .get(`${baseUrl}`) 
+      .get(`${baseUrl}/${userId}`)
+      .set('Authorization', `Bearer ${token}` ) 
       .send();
 
     expect(response.status).toBe(200);
   });
 
+  it('Deve retornar um erro 401', async () => {
+    const token = tokenMock.genToken(false, 9);
+    const response = await supertest(app)
+      .get(`${baseUrl}/${userId}`)
+      .send();
+
+    expect(response.status).toBe(401);
+  });
+
+
+
 });
-
-
-
-
-
-
-
-
-
-

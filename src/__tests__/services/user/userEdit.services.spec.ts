@@ -1,32 +1,19 @@
 import { PrismaClient } from "@prisma/client";
 import app from "../../../app";
 import supertest from "supertest";
-import { editUserRouteMock } from "../../mocks/users";
+import { editUserRouteMock, generateSscNumber } from "../../mocks/users";
 import tokenMock from "../../integration/token.mock";
 import * as shortid from 'shortid';
 import { createUserService, updateUserService } from "../../../services/user";
 
 
-describe('PUT /users/:id (Editar usuário)', () => {
+describe('PATCH /users/:id (Editar usuário)', () => {
     let userId: number;
     let isAdmin: boolean;
     
     const baseUrl: string = '/user';
 
     const prisma = new PrismaClient();
-    
-    const generateSscNumber = (): string => {
-      const timestampPart = Date.now().toString().slice(-6);
-    
-      
-      const randomPart = shortid.generate().slice(-5);
-    
-      
-      const sscNumber = `${timestampPart}${randomPart}`;
-    
-      
-      return sscNumber.slice(0, 11);
-    };
     
     beforeAll(async () => {
 
@@ -93,7 +80,7 @@ describe('PUT /users/:id (Editar usuário)', () => {
         .set('Authorization', `Bearer ${invalidToken}`)
         .send(editedUserData);
   
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(401);
       expect(response.body).toHaveProperty('error', 'Token inválido');
     });
   

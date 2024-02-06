@@ -7,7 +7,7 @@ import tokenMock from "../../integration/token.mock";
 import {TUser} from "../../../interfaces/user.interfaces";
 import * as shortid from 'shortid';
 
-describe('PUT /users/:id (Editar usuário)', () => {
+describe('GET /users/:id (Editar usuário)', () => {
   let userId: number;
   let isAdmin: boolean;
   
@@ -51,22 +51,15 @@ describe('PUT /users/:id (Editar usuário)', () => {
     });
   });
 
-  it('Deve editar um usuário com sucesso', async () => {
+  it('Deve ser capaz de buscar o perfil do usuário com sucesso', async () => {
+    const token = tokenMock.genToken(isAdmin, userId);
     const response = await supertest(app)
-      .get(`${baseUrl}`) 
+      .get(`${baseUrl}/profile`)
+      .set('Authorization', `Bearer ${token}` ) 
       .send();
 
     expect(response.status).toBe(200);
   });
+  
 
 });
-
-
-
-
-
-
-
-
-
-

@@ -35,9 +35,9 @@ import {
   );
   userRoutes.get("",listAllUsersController)
   userRoutes.get("/profile", validateAuthMiddleware, retrieveUserByTokenController);
-  userRoutes.get("/:id", validateUserExistsMiddleware, retrieveUserController);
-  userRoutes.patch("/:id", validateSocialSecurityExistsMiddleware, updateUserController);
-  userRoutes.delete("/:id", validateUserExistsMiddleware, deleteUserController);
+  userRoutes.get("/:id", validateAuthMiddleware,validateUserExistsMiddleware, retrieveUserController);
+  userRoutes.patch("/:id", validateAuthMiddleware,validateSocialSecurityExistsMiddleware, updateUserController);
+  userRoutes.delete("/:id", validateAuthMiddleware, validateUserExistsMiddleware, deleteUserController);
  
   
 
