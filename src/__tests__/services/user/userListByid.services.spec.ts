@@ -60,16 +60,4 @@ describe('PUT /users/:id (Editar usuário)', () => {
 
     expect(response.status).toBe(200);
   });
-
-  it('Deve retornar um erro 401', async () => {
-    const token = tokenMock.genToken(false, 9);
-    const response = await supertest(app)
-      .get(`${baseUrl}/${userId}`)
-      .send();
-
-    expect(response.status).toBe(401);
-  });
-
-
-
 });

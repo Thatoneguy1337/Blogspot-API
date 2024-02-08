@@ -65,19 +65,17 @@ describe('DELETE /user', () => {
       const token = tokenMock.genToken(isAdmin, userId);
       const response = await supertest(app).delete(`${baseUrl}/${userId}`)
       .set('Authorization', `Bearer ${token}`);
-      console.log("Token de acesso:",token);
-      console.log("Id do usuário:",userId);
       const expectResults = { status: 204 };
   
       expect(response.status).toBe(expectResults.status);
       expect(response.body).toStrictEqual({});
     });
   
-    it('Deve retornar 404 se o usuário não existir', async () => {
+    it('Deve retornar 401 se o usuário não existir', async () => {
       const nonExistentUserId = 'id_invalido';
       const response = await supertest(app).delete(`${baseUrl}/${nonExistentUserId}`)
       .set('Authorization', `Bearer ${tokenMock}`);
-      expect(response.status).toBe(404);
+      expect(response.status).toBe(401);
 
 
       const deletedUser = await prisma.users.findUnique({

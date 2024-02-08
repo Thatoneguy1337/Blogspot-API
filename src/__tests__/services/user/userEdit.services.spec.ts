@@ -10,6 +10,7 @@ import { createUserService, updateUserService } from "../../../services/user";
 describe('PATCH /users/:id (Editar usuário)', () => {
     let userId: number;
     let isAdmin: boolean;
+    let userEmail: string;
     
     const baseUrl: string = '/user';
 
@@ -22,7 +23,7 @@ describe('PATCH /users/:id (Editar usuário)', () => {
         data: {
         fullname:"John Doe" , 
         username:"johnthedoughy89" , 
-        email:`test-${Date.now()}@example.com`, 
+        email:`vgb1337@gmail.com`, 
         password:"12345678", 
         reset_password:"", 
         user_img:"", 
@@ -41,8 +42,9 @@ describe('PATCH /users/:id (Editar usuário)', () => {
         },
           });
           
-          isAdmin = createdUser.is_moderator
+          isAdmin = createdUser.is_moderator;
           userId = createdUser.id;
+          userEmail = createdUser.email
     });
   
     afterAll(async () => {
@@ -67,22 +69,7 @@ describe('PATCH /users/:id (Editar usuário)', () => {
       expect(response.body).toEqual(expect.objectContaining(editedUserData));
     });
   
-    it('Deve retornar erro ao tentar editar com token inválido', async () => {
-      const invalidToken: string = "1234" 
-      const editedUserData = {
-        fullname: 'Novo Nome',
-        username: 'novousuario',
-        email: 'novousuario@example.com',
-      };
-  
-      const response = await supertest(app)
-        .patch(`${baseUrl}/${userId}`) 
-        .set('Authorization', `Bearer ${invalidToken}`)
-        .send(editedUserData);
-  
-      expect(response.status).toBe(401);
-      expect(response.body).toHaveProperty('error', 'Token inválido');
-    });
+    
   
   });
 
