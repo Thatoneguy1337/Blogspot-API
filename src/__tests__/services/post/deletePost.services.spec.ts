@@ -1,55 +1,67 @@
-import { Prisma, PrismaClient } from "@prisma/client";
-import { createPostService, deletePostService } from "../../../services/posts";
+import { PrismaClient } from "@prisma/client";
+import { generateSscNumber } from "../../mocks/users";
+import tokenMock from "../../integration/token.mock";
+import supertest from "supertest";
+import app from "../../../app";
 
+describe('Post functions', () => {
+  let userId: number;
+  let isAdmin: boolean;
+  let postId: number;
+  
+  const baseUrl: string = '/post';
 
-describe("like post function", ()=>{
-    
-    let prisma: PrismaClient
+  const prisma = new PrismaClient();
 
-    beforeAll(() => {
-        prisma = new PrismaClient();
-      });
-      
-    
-   afterAll(async () => {
-        await prisma.$disconnect();
-      });
+  beforeAll(async () => {
+    const createdUser = await prisma.users.create({
+      data: {
+        fullname: "John Doe",
+        username: "johnthedoughy89",
+        email: `test-${Date.now()}@example.com`,
+        password: "12345678",
+        reset_password: "",
+        user_img: "",
+        bg_img: "",
+        is_banned: false,
+        is_moderator: false,
+        ssc_number: generateSscNumber(),
+        telephone: "1122604433",
+        birthdate: "06/04/1989",
+        description: "",
+        zip_code: "20068397",
+        state: "Texas",
+        city: "El Passo",
+        street: "Benson Stt",
+        number: "267"
+      },
+    });
 
-      test('should add a like with valid data', async () => {
-        
-       
-        const userId = 1
-       
-        const validData = {
-            id: 1,
-            posted_at: new Date(),
-            user_post: {
-              id: 1,
-              fullname: 'John Doe',
-              username: 'john_doe',
-              user_img: 'user_image.jpg',
-              description: 'User description',
-            },
-            description: 'Post description',
-            post_img: 'post_image.jpg',
-          };
+    userId = createdUser.id;
+    isAdmin = createdUser.is_moderator;
 
+    const createPost = await prisma.posts.create({
+      data: {
+        description: "White Pony is my favorite Deftones album, the second one is Around the Fur",
+        post_img: "suaimagemaqui.jpg",
+        user_id: userId
+      },
+    });
 
-        const createdPost = createPostService(validData, userId)
+    postId = createPost.id;
+  });
 
+  afterAll(async () => {
+    await prisma.users.delete({
+      where: { id: userId },
+    });
+  });
 
-        expect(createdPost).toBeDefined();
-
-        await deletePostService(validData.id);
-
-        const deletedPost = await prisma.users.findUnique({
-            where: {
-                id: validData.id,
-            },
-        });
-
-
-        expect(deletedPost).toBeNull();
-      });
-
-})
+  test('should get a post by id', async () => {
+    const token: string = tokenMock.genToken(isAdmin, userId);
+    const response = await supertest(app)
+    .delete(`${baseUrl}/${postId}`)
+    .set('Authorization', `Bearer ${token}`)
+    expect(response.status).toBe(204);
+  });
+});

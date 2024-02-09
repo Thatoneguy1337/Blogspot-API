@@ -3,7 +3,6 @@ import { generateSscNumber } from "../../mocks/users";
 import tokenMock from "../../integration/token.mock";
 import supertest from "supertest";
 import app from "../../../app";
-import { TPostRequest,TPostResponse } from "../../../interfaces/post.interfaces";
 
 describe('Post functions', () => {
   let userId: number;
@@ -61,7 +60,9 @@ describe('Post functions', () => {
   });
 
   test('should get a post by id', async () => {
-    const response = await supertest(app).get(`${baseUrl}/${postId}`);
+    
+    const response = await supertest(app)
+    .get(`${baseUrl}/${postId}`)
     expect(response.status).toBe(200);
     expect(response.body.id).toBe(postId); 
   });
