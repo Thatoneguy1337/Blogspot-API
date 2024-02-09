@@ -61,9 +61,7 @@ describe('Post functions', () => {
   });
 
   test('should get a post by id', async () => {
-    const response = await supertest(app).get(`/post/${postId}`);
-    console.log("Id do Post:", postId);
-    console.log("Resposta da requisição:", response.body);
+    const response = await supertest(app).get(`${baseUrl}/${postId}`);
     expect(response.status).toBe(200);
     expect(response.body.id).toBe(postId); 
   });
