@@ -59,7 +59,7 @@ describe('PATCH /users/:id (Editar usuário)', () => {
         username: 'Cleitin',
         email: 'novousuario@email.com',
       };
-      const token = tokenMock.genToken(isAdmin, userId);
+      const token: string = tokenMock.genToken(isAdmin, userId);
       const response = await supertest(app)
         .patch(`${baseUrl}/${userId}`) 
         .set('Authorization', `Bearer ${token}`)

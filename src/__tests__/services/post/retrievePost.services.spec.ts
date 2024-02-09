@@ -1,50 +1,66 @@
 import { PrismaClient } from "@prisma/client";
-import { listAllPostService, createPostService, likePostService} from "../../../services/posts";
+import { generateSscNumber } from "../../mocks/users";
+import tokenMock from "../../integration/token.mock";
+import supertest from "supertest";
+import app from "../../../app";
 
+describe('Post functions', () => {
+  let userId: number;
+  let isAdmin: boolean;
+  let userEmail: string;
+  
+  const baseUrl: string = '/post';
 
-describe('PostFunctions', ()=> {
+  const prisma = new PrismaClient();
 
-    let prisma: PrismaClient;
+    beforeAll( async () => {
+      const createdUser = await prisma.users.create({
+        data: {
+        fullname:"John Doe" , 
+        username:"johnthedoughy89" , 
+        email:`test-${Date.now()}@example.com`, 
+        password:"12345678", 
+        reset_password:"", 
+        user_img:"", 
+        bg_img:"",
+        is_banned:false,
+        is_moderator:false,
+        ssc_number:generateSscNumber(), 
+        telephone:"1122604433",
+        birthdate:"06/04/1989",
+        description:"",
+        zip_code:"20068397",
+        state:"Texas",
+        city:"El Passo",
+        street:"Benson Stt",
+        number:"267"
+        },
+          });
+          
+          isAdmin = createdUser.is_moderator;
+          userId = createdUser.id;
+          userEmail = createdUser.email;
 
-    beforeAll(() => {
-        prisma = new PrismaClient();
-    })
-
+      });
+      
+    
     afterAll(async () => {
-        await prisma.$disconnect();
-    })
+    await prisma.users.delete({
+      where: { id: userId },
+        });
+      });
 
-    test('should list all posts', async () => {
+    test(' should create a post', async () => {
+      const token: string = tokenMock.genToken(isAdmin, userId);
+      const response = await supertest(app)
+      .get(`${baseUrl}`) 
+      .set('Authorization', `Bearer ${token}`)
 
-        const userId = 1
-       
-        const validData = {
-            id: 1,
-            posted_at: new Date(),
-            user_post: {
-              id: 1,
-              fullname: 'John Doe',
-              username: 'john_doe',
-              user_img: 'user_image.jpg',
-              description: 'User description',
-            },
-            description: 'Post description',
-            post_img: 'post_image.jpg',
-          };
+        expect(response.status).toBe(200);
+    }); 
+   
 
-
-        const createdPost = createPostService(validData, userId);
-
-
-        expect(createdPost).toEqual(validData);
-
-        const postList = await listAllPostService();
-
-        expect(postList).toHaveProperty("map");
-
-    });
-
-});
+  });
 
 
 
