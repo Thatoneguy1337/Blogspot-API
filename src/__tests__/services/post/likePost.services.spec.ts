@@ -1,44 +1,73 @@
-import { Prisma, PrismaClient } from "@prisma/client";
-import { likePostService} from "../../../services/posts";
+import { PrismaClient } from "@prisma/client";
+import { generateSscNumber } from "../../mocks/users";
+import tokenMock from "../../integration/token.mock";
+import supertest from "supertest";
+import app from "../../../app";
 
+describe('Post functions', () => {
+  let userId: number;
+  let isAdmin: boolean;
+  let postId: number;
+  let likePostId: number;
+  const baseUrl: string = '/post';
 
-describe("like post function", ()=>{
+  const prisma = new PrismaClient();
+
+  beforeAll(async () => {
+    const createdUser = await prisma.users.create({
+      data: {
+        fullname: "John Doe",
+        username: "johnthedoughy89",
+        email: `test-${Date.now()}@example.com`,
+        password: "12345678",
+        reset_password: "",
+        user_img: "",
+        bg_img: "",
+        is_banned: false,
+        is_moderator: false,
+        ssc_number: generateSscNumber(),
+        telephone: "1122604433",
+        birthdate: "06/04/1989",
+        description: "",
+        zip_code: "20068397",
+        state: "Texas",
+        city: "El Passo",
+        street: "Benson Stt",
+        number: "267"
+      },
+    });
+
+    userId = createdUser.id;
+    isAdmin = createdUser.is_moderator;
+
+    const createPost = await prisma.posts.create({
+      data: {
+        description: "White Pony is my favorite Deftones album, the second one is Around the Fur",
+        post_img: "suaimagemaqui.jpg",
+        user_id: userId
+      },
+    });
+
+    postId = createPost.id;
     
-    let prisma: PrismaClient
-
-    beforeAll(() => {
-        prisma = new PrismaClient();
-      });
-      
+  });
+  afterAll(async () => {
     
-   afterAll(async () => {
-        await prisma.$disconnect();
-      });
+    await prisma.users.delete({
+      where: { id: userId },
+    });
 
-      test('should add a like with valid data', () => {
-        
-        const likeId = 1
-        const postId = 1
-        const userId = 1
+    await prisma.posts.delete({
+      where: { id: postId },
+    });
+  });
 
-        const validData = {
-          id: likeId,
-          liked_at: new Date(),
-          user:{
-            id:userId,
-            username:"john_doe",
-            user_img:""
-        
-          }
-        };
-    
-        const addedLike = likePostService(validData,postId,userId);
-    
-        
-        expect(addedLike).toEqual(validData);
-
-       
-
-      });
-
-})
+  test('should like a post by id', async () => {
+    const token: string = tokenMock.genToken(isAdmin, userId);
+    const response = await supertest(app)
+    .post(`${baseUrl}/${postId}/like`)
+    .set('Authorization', `Bearer ${token}`);
+    expect(response.status).toBe(201);
+    expect(response.body.id).toBe(postId); 
+  }, 10000);
+});

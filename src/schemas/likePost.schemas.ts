@@ -4,7 +4,8 @@ const likePostSchema = z.object({
     id:z.number(),
     liked_at:z.date(),
     post_id: z.number(),
-    user_id: z.number()
+    user_id: z.number(),
+    username: z.string()
 })
 
 const likePostSchemaResponse = likePostSchema.extend({

@@ -54,6 +54,7 @@ model Threads {
   post_id     Int?
   user        Users?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id     Int?
+  username    String   @db.VarChar(127)
 
   @@map("threads")
 }
@@ -80,9 +81,10 @@ model Likes {
 id          Int    @id @default(autoincrement())
 liked_at    DateTime @default(now())
 post        Posts? @relation(fields: [post_id], references: [id], onDelete: Cascade)
-post_id     Int
+post_id     Int?
 user        Users? @relation(fields: [user_id], references: [id], onDelete: Cascade)
-user_id     Int
+user_id     Int?
+username    String   @db.VarChar(127)
 
 @@map("likes")
 }

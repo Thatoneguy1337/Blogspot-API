@@ -65,7 +65,7 @@ describe('Post functions', () => {
     const response = await supertest(app)
     .patch(`${baseUrl}/${postId}`)
     .set('Authorization', `Bearer ${token}`)
-    .send(editData)
+    .send(editData);
     expect(response.status).toBe(200);
   });
 });
