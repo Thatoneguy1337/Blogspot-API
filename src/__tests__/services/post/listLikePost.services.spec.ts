@@ -49,6 +49,16 @@ describe('Post functions', () => {
     });
 
     postId = createPost.id;
+
+    const createLikePost = await prisma.likes.create({
+      data:{
+        user_id: userId,
+        post_id: postId,
+        username: createdUser.username
+      }
+    })
+
+    likePostId = createLikePost.id
     
   });
 
@@ -63,9 +73,8 @@ describe('Post functions', () => {
   test('should like a post by id', async () => {
     const token: string = tokenMock.genToken(isAdmin, userId);
     const response = await supertest(app)
-    .post(`${baseUrl}/${postId}/like`)
+    .get(`${baseUrl}/${postId}/like`)
     .set('Authorization', `Bearer ${token}`);
-    expect(response.status).toBe(201);
-    expect(response.body.id).toBe(postId); 
+    expect(response.status).toBe(200);
   }, 10000);
 });

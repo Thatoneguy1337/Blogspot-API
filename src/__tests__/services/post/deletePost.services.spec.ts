@@ -8,7 +8,7 @@ describe('Post functions', () => {
   let userId: number;
   let isAdmin: boolean;
   let postId: number;
-  
+  let likePostId: number;
   const baseUrl: string = '/post';
 
   const prisma = new PrismaClient();
@@ -49,19 +49,32 @@ describe('Post functions', () => {
     });
 
     postId = createPost.id;
+
+    const createLikePost = await prisma.likes.create({
+      data:{
+        user_id: userId,
+        post_id: postId,
+        username: createdUser.username
+      }
+    })
+
+    likePostId = createLikePost.id
+    
   });
 
   afterAll(async () => {
+    
     await prisma.users.delete({
       where: { id: userId },
     });
+
   });
 
-  test('should get a post by id', async () => {
+  test('should like a post by id', async () => {
     const token: string = tokenMock.genToken(isAdmin, userId);
     const response = await supertest(app)
-    .delete(`${baseUrl}/${postId}`)
-    .set('Authorization', `Bearer ${token}`)
+    .delete(`${baseUrl}/${likePostId}/like`)
+    .set('Authorization', `Bearer ${token}`);
     expect(response.status).toBe(204);
-  });
+  }, 10000);
 });
