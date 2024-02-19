@@ -43,12 +43,7 @@ export const likePostService = async (data: TLikeSchemaRequest, postId: number, 
       },
     });
 
-    console.log(postId);
-    console.log(userId);
-
     return likePostSchemaResponse.parse(likedPost);
-
-
 };
 
 

@@ -19,20 +19,21 @@ const postSchema = z.object({
     post_img: z.string().default("")
 });
 
+
 const postSchemaRequest = postSchema.omit({
     id: true,  
     posted_at: true,
     user_id: true,
     user_post:true,
     threads: true,
-});
-
-const postSchemaResponse = postSchema;
-
-const manyPostSchemaResponse = z.array(postSchemaResponse);
-
-const postSchemaUpdate = postSchema
-.omit({
+  });
+  
+  const postSchemaResponse = postSchema;
+  
+  const manyPostSchemaResponse = z.array(postSchemaResponse);
+  
+  const postSchemaUpdate = postSchema
+  .omit({
   id: true,
   posted_at:true,
   user_id: true,
@@ -41,12 +42,13 @@ const postSchemaUpdate = postSchema
 .deepPartial();
 
 const postThreadsResponse = z.object({
-  threads: z.array(threadSchemaResponse),
+  threads: z.array(threadSchema),
 });
 
 const postLikeResponse = z.object({
   likes:z.array(likePostSchema),
 })
+
 
 
 export {

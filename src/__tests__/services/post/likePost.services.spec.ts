@@ -61,6 +61,7 @@ describe('Post functions', () => {
   });
 
   test('should like a post by id', async () => {
+    console.log(postId);
     const token: string = tokenMock.genToken(isAdmin, userId);
     const response = await supertest(app)
     .post(`${baseUrl}/${postId}/like`)

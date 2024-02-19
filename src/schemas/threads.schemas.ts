@@ -8,6 +8,7 @@ const threadSchema = z.object({
    comment_img:z.string().default(""),
    post_id:z.number(),
    user_id:z.number(),
+   username:z.string()
 })
 
 const threadSchemaResponse = threadSchema

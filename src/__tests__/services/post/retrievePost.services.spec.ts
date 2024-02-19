@@ -41,6 +41,14 @@ describe('Post functions', () => {
           userId = createdUser.id;
           userEmail = createdUser.email;
 
+          const createPost = await prisma.posts.create({
+            data: {
+              description: "White Pony is my favorite Deftones album, the second one is Around the Fur",
+              post_img: "suaimagemaqui.jpg",
+              user_id: userId
+            },
+          });    
+
       });
       
     
@@ -50,7 +58,7 @@ describe('Post functions', () => {
         });
       });
 
-    test(' should create a post', async () => {
+    test(' should list  created post', async () => {
       const token: string = tokenMock.genToken(isAdmin, userId);
       const response = await supertest(app)
       .get(`${baseUrl}`) 
