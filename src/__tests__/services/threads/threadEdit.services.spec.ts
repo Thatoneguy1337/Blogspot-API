@@ -79,6 +79,6 @@ describe('Post functions', () => {
     .patch(`${baseUrl}/${threadId}`)
     .set('Authorization', `Bearer ${token}`)
     .send(threadData);
-    expect(response.status).toBe(201);
+    expect(response.status).toBe(200);
   });
 });
