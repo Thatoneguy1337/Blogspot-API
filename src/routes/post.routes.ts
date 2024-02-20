@@ -38,7 +38,10 @@ postRoutes.post(
   validateDataMiddleware(postSchemaRequest),
   createPostController
 );
-postRoutes.post("/:id/like", validateAuthMiddleware, likePostController);
+postRoutes.post("/:id/like", 
+validateAuthMiddleware, 
+validateOwnerPostMiddleware, 
+likePostController);
 postRoutes.patch(
   "/:id",
   validateDataMiddleware(postSchemaUpdate),

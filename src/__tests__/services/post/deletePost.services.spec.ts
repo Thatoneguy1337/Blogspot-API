@@ -4,7 +4,7 @@ import tokenMock from "../../integration/token.mock";
 import supertest from "supertest";
 import app from "../../../app";
 
-describe('Post functions', () => {
+describe('DELETE /post/:id', () => {
   let userId: number;
   let isAdmin: boolean;
   let postId: number;
@@ -76,5 +76,5 @@ describe('Post functions', () => {
     .delete(`${baseUrl}/${likePostId}/like`)
     .set('Authorization', `Bearer ${token}`);
     expect(response.status).toBe(204);
-  }, 10000);
+  }, 5000);
 });

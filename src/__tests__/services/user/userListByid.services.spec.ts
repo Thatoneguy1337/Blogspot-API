@@ -55,8 +55,7 @@ describe('PUT /users/:id (Editar usuário)', () => {
     const token = tokenMock.genToken(isAdmin, userId);
     const response = await supertest(app)
       .get(`${baseUrl}/${userId}`)
-      .set('Authorization', `Bearer ${token}` ) 
-      .send();
+      .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(200);
   });

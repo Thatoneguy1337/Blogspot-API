@@ -4,7 +4,7 @@ import tokenMock from "../../integration/token.mock";
 import supertest from "supertest";
 import app from "../../../app";
 
-describe('Post functions', () => {
+describe('PATCH /post/:id', () => {
   let userId: number;
   let isAdmin: boolean;
   let postId: number;
@@ -57,7 +57,7 @@ describe('Post functions', () => {
     });
   });
 
-  test('should get a post by id', async () => {
+  test('should edit a post by id', async () => {
     const editData = {
         description: "Saturday Night Wrist is the best deftones album"
     }

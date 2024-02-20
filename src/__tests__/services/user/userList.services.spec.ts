@@ -51,13 +51,13 @@ describe('PUT /users/:id (Editar usuário)', () => {
     });
   });
 
-  it('Deve editar um usuário com sucesso', async () => {
+  it('Deve listar um usuário com sucesso', async () => {
     const response = await supertest(app)
-      .get(`${baseUrl}`) 
-      .send();
+      .get(`${baseUrl}`); 
+      
 
     expect(response.status).toBe(200);
-  });
+  }, 10000);
 
 });
 

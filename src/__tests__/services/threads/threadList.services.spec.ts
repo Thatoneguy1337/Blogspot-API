@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import { generateSscNumber } from "../../mocks/users";
-import tokenMock from "../../integration/token.mock";
 import supertest from "supertest";
 import app from "../../../app";
 
@@ -60,7 +59,7 @@ describe('Post functions', () => {
         }
     }) 
 
-    threadId = createThread.id
+    threadId = createThread.id;
 
   });
 
@@ -72,6 +71,15 @@ describe('Post functions', () => {
 
   test('should list a thread in a post through its id', async () => {
     console.log("Id do post:", postId);
+    const retrievePostThread = await prisma.posts.findUnique({
+      where:{
+        id:postId
+      },
+      include:{
+        threads: true
+      }
+    });
+    console.log("Thread do post:",retrievePostThread); 
     const response = await supertest(app)
     .get(`${baseUrl}/${postId}`)
     expect(response.status).toBe(200);

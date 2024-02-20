@@ -71,7 +71,7 @@ describe('Post functions', () => {
       .send(createPost);
 
     expect(response.status).toBe(401);
-    });     
+    }, 5000);     
 
   });
 

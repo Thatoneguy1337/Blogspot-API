@@ -69,7 +69,7 @@ describe('DELETE /user', () => {
   
       expect(response.status).toBe(expectResults.status);
       expect(response.body).toStrictEqual({});
-    });
+    }, 10000);
   
     it('Deve retornar 401 se o usuário não existir', async () => {
       const nonExistentUserId = 'id_invalido';
@@ -84,5 +84,5 @@ describe('DELETE /user', () => {
     
       expect(deletedUser).toBeNull();
 
-    });
+    }, 10000);
   });
