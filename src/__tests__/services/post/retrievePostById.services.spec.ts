@@ -4,7 +4,7 @@ import tokenMock from "../../integration/token.mock";
 import supertest from "supertest";
 import app from "../../../app";
 
-describe('Post functions', () => {
+describe('GET /post/:id', () => {
   let userId: number;
   let postId: number;
   
