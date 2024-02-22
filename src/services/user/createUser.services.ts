@@ -10,12 +10,8 @@ import { userSchemaResponse } from "../../schemas/user.schemas";
 export const createUserService = async (
     data: TUserRequest
   ): Promise<TUserResponse> => {
-   
-    
-
-    const user: Users = await prisma.users.create({data});
-  
-    return userSchemaResponse.parse(user);
+    const users: Users = await prisma.users.create({data});
+    return userSchemaResponse.parse(users);
   };
 
 

@@ -22,7 +22,6 @@ import { threadSchemaRequest,
 
     threadRoutes.get(
         "/:id",
-        validateThreadExistsMiddleware,
         listAllPostThreadsController
       );
       threadRoutes.post(

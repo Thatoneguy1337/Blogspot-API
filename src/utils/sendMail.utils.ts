@@ -1,19 +1,22 @@
-import { createTransport } from "nodemailer";
+import { createTransport, Transporter} from "nodemailer";
 import { TResetEmail } from "../interfaces/user.interfaces";
 import { AppError } from "../errors/errors";
 import Mailgen from "mailgen";
 
 class EmailService {
-  async sendEmail({ to, subject, text }: TResetEmail) {
-    const trasnporter = createTransport({
-      host: "smtp.gmail.com",
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
+  transporter: Transporter;
+  constructor(transporter = createTransport({
+    host: "smtp.gmail.com",
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  })) {
+    this.transporter = transporter;
+  }
 
-    await trasnporter
+  async sendEmail({ to, subject, text }: TResetEmail) {
+    await this.transporter
       .sendMail({
         from: process.env.SMTP_USER,
         to,
@@ -21,9 +24,9 @@ class EmailService {
         html: text,
       })
       .then(() => {
-        console.log("Email send with sucess");
+        console.log("Email sent with success");
       })
-      .catch((err) => {
+      .catch((err:any) => {
         console.log(err);
         throw new AppError("Error sending email, try again later", 500);
       });
@@ -37,7 +40,7 @@ class EmailService {
     const mailGenerator = new Mailgen({
       theme: "default",
       product: {
-        name: "Motor Shop",
+        name: "Blogspot",
         link: "http://localhost:5173",
       },
     });

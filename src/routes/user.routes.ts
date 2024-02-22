@@ -11,13 +11,13 @@ import {
     newPasswordController
   } from "../controllers/user";
   
+
 import {
     validateDataMiddleware,
     validateEmailExistsMiddleware,
     validateSocialSecurityExistsMiddleware,
     validateUserExistsMiddleware, 
-    validateAuthMiddleware,
-    validateUserOwnerMiddleware
+    validateAuthMiddleware
 } from "../middlewares/index"
 
 
@@ -32,19 +32,13 @@ import {
     validateSocialSecurityExistsMiddleware,
     createUserController
   );
-  userRoutes.get("",validateAuthMiddleware,listAllUsersController)
+  userRoutes.get("",listAllUsersController)
   userRoutes.get("/profile", validateAuthMiddleware, retrieveUserByTokenController);
-  userRoutes.get("/:id", validateUserExistsMiddleware, retrieveUserController);
-  userRoutes.use(
-    "/:id",
-    validateAuthMiddleware,
-    validateUserExistsMiddleware,
-    validateUserOwnerMiddleware,
-  );
-  userRoutes.patch("/:id", validateSocialSecurityExistsMiddleware, updateUserController);
-  userRoutes.delete("/:id", deleteUserController)
+  userRoutes.get("/:id",validateUserExistsMiddleware, retrieveUserController);
+  userRoutes.patch("/:id", validateAuthMiddleware,validateSocialSecurityExistsMiddleware, updateUserController);
+  userRoutes.delete("/:id", validateAuthMiddleware, validateUserExistsMiddleware, deleteUserController);
+ 
   
-
 
 
 

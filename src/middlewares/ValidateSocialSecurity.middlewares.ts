@@ -3,12 +3,12 @@ import { prisma } from "../server";
 import { AppError } from "../errors/errors";
 
 export const validateSocialSecurityExistsMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const { sc_number } = req.body;
+  const { ssc_number } = req.body;
 
-  if (sc_number) {
+  if (ssc_number) {
     const user = await prisma.users.findFirst({
       where: {
-        sc_number,
+        ssc_number,
       },
     });
 

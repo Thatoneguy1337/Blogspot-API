@@ -13,5 +13,6 @@ export const createUserController = async (
 
   const newUser: TUserResponse = await createUserService(data);
 
+
   return res.status(201).json(newUser);
 };

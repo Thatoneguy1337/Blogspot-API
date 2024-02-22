@@ -4,6 +4,7 @@ import { AppError } from "../../errors/errors";
 import { emailService } from "../../utils/sendMail.utils";
 
 export const retrieveForgottenPasswordService = async (email: string): Promise<void> => {
+  
   const user = await prisma.users.findFirst({
     where: { email },
   });

@@ -15,9 +15,9 @@ import {
   
   export type TUserUpdateRequest = Partial<TUserRequest>;
 
-  export type TUserManyRequest = z.infer<typeof manyUsersSchemaResponse>
+  export type TUserManyRequest = z.infer<typeof manyUsersSchemaResponse>;
   
-  export type TResetEmail = z.infer<typeof resetEmailSchema>
+  export type TResetEmail = z.infer<typeof resetEmailSchema>;
 
 
   
