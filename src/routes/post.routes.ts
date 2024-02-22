@@ -17,14 +17,8 @@ import {
 import 
 {
 validateDataMiddleware,
-validateEmailExistsMiddleware,
-validateSocialSecurityExistsMiddleware,
-validateUserExistsMiddleware,
-validateUserOwnerMiddleware,
 validateAuthMiddleware,
 validateOwnerPostMiddleware,
-validatePostExistsMiddleware,
-checkLikePermission, 
  } from "../middlewares/index"
 
 export const postRoutes: Router = Router();

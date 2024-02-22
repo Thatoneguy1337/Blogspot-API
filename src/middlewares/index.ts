@@ -9,6 +9,7 @@ import { validateOwnerPostMiddleware } from "./ValidateOwnerPost.middlewares";
 import { validateIsOwnerThreadMiddleware } from "./ValidateOwnerComment.middlewares";
 import { validateThreadExistsMiddleware } from "./ValidateComment.middlewares";
 import { checkLikePermission } from "./ValidatePostLike.middlewares";
+
 export {
     validateDataMiddleware,
     validateEmailExistsMiddleware,

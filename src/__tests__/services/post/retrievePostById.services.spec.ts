@@ -22,8 +22,6 @@ describe('Post functions', () => {
         reset_password: "",
         user_img: "",
         bg_img: "",
-        is_banned: false,
-        is_moderator: false,
         ssc_number: generateSscNumber(),
         telephone: "1122604433",
         birthdate: "06/04/1989",

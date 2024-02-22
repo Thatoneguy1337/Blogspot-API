@@ -6,7 +6,6 @@ import app from "../../../app";
 
 describe('Post functions', () => {
   let userId: number;
-  let isAdmin: boolean;
   let postId: number;
   let threadId: number;  
   const baseUrl: string = '/threads';
@@ -23,8 +22,6 @@ describe('Post functions', () => {
         reset_password: "",
         user_img: "",
         bg_img: "",
-        is_banned: false,
-        is_moderator: false,
         ssc_number: generateSscNumber(),
         telephone: "1122604433",
         birthdate: "06/04/1989",
@@ -38,7 +35,6 @@ describe('Post functions', () => {
     });
 
     userId = createdUser.id;
-    isAdmin = createdUser.is_moderator;
 
     const createPost = await prisma.posts.create({
       data: {
@@ -70,7 +66,7 @@ describe('Post functions', () => {
   });
 
   test('should create a thread in a post through its id', async () => {
-    const token: string = tokenMock.genToken(isAdmin, userId);
+    const token: string = tokenMock.genToken(userId);
     const response = await supertest(app)
     .delete(`${baseUrl}/${threadId}`)
     .set('Authorization', `Bearer ${token}`)

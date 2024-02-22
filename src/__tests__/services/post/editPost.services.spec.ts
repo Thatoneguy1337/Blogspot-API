@@ -6,7 +6,6 @@ import app from "../../../app";
 
 describe('PATCH /post/:id', () => {
   let userId: number;
-  let isAdmin: boolean;
   let postId: number;
   
   const baseUrl: string = '/post';
@@ -23,8 +22,6 @@ describe('PATCH /post/:id', () => {
         reset_password: "",
         user_img: "",
         bg_img: "",
-        is_banned: false,
-        is_moderator: false,
         ssc_number: generateSscNumber(),
         telephone: "1122604433",
         birthdate: "06/04/1989",
@@ -38,7 +35,6 @@ describe('PATCH /post/:id', () => {
     });
 
     userId = createdUser.id;
-    isAdmin = createdUser.is_moderator;
 
     const createPost = await prisma.posts.create({
       data: {
@@ -61,7 +57,7 @@ describe('PATCH /post/:id', () => {
     const editData = {
         description: "Saturday Night Wrist is the best deftones album"
     }
-    const token: string = tokenMock.genToken(isAdmin, userId);
+    const token: string = tokenMock.genToken(userId);
     const response = await supertest(app)
     .patch(`${baseUrl}/${postId}`)
     .set('Authorization', `Bearer ${token}`)

@@ -38,8 +38,6 @@ describe('DELETE /user', () => {
         reset_password:"", 
         user_img:"", 
         bg_img:"",
-        is_banned:false,
-        is_moderator:false,
         ssc_number:generateSscNumber(), 
         telephone:"1122604433",
         birthdate:"06/04/1989",
@@ -52,7 +50,6 @@ describe('DELETE /user', () => {
         },
           });
           
-          isAdmin = createdUser.is_moderator
           userId = createdUser.id;
       });
   
@@ -62,7 +59,7 @@ describe('DELETE /user', () => {
       })
   
     it('Deve deletar um usuário com sucesso', async () => {
-      const token = tokenMock.genToken(isAdmin, userId);
+      const token = tokenMock.genToken( userId);
       const response = await supertest(app).delete(`${baseUrl}/${userId}`)
       .set('Authorization', `Bearer ${token}`);
       const expectResults = { status: 204 };

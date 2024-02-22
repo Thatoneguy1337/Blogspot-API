@@ -6,7 +6,6 @@ import app from "../../../app";
 
 describe('DELETE /post/:id', () => {
   let userId: number;
-  let isAdmin: boolean;
   let postId: number;
   let likePostId: number;
   const baseUrl: string = '/post';
@@ -23,8 +22,6 @@ describe('DELETE /post/:id', () => {
         reset_password: "",
         user_img: "",
         bg_img: "",
-        is_banned: false,
-        is_moderator: false,
         ssc_number: generateSscNumber(),
         telephone: "1122604433",
         birthdate: "06/04/1989",
@@ -38,7 +35,7 @@ describe('DELETE /post/:id', () => {
     });
 
     userId = createdUser.id;
-    isAdmin = createdUser.is_moderator;
+   
 
     const createPost = await prisma.posts.create({
       data: {
@@ -71,7 +68,7 @@ describe('DELETE /post/:id', () => {
   });
 
   test('should like a post by id', async () => {
-    const token: string = tokenMock.genToken(isAdmin, userId);
+    const token: string = tokenMock.genToken(userId);
     const response = await supertest(app)
     .delete(`${baseUrl}/${likePostId}/like`)
     .set('Authorization', `Bearer ${token}`);

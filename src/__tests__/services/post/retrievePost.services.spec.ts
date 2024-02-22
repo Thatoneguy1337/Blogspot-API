@@ -6,7 +6,6 @@ import app from "../../../app";
 
 describe('Post functions', () => {
   let userId: number;
-  let isAdmin: boolean;
   let userEmail: string;
   
   const baseUrl: string = '/post';
@@ -23,8 +22,6 @@ describe('Post functions', () => {
         reset_password:"", 
         user_img:"", 
         bg_img:"",
-        is_banned:false,
-        is_moderator:false,
         ssc_number:generateSscNumber(), 
         telephone:"1122604433",
         birthdate:"06/04/1989",
@@ -37,7 +34,7 @@ describe('Post functions', () => {
         },
           });
           
-          isAdmin = createdUser.is_moderator;
+       
           userId = createdUser.id;
           userEmail = createdUser.email;
 
@@ -59,7 +56,7 @@ describe('Post functions', () => {
       });
 
     test(' should list  created post', async () => {
-      const token: string = tokenMock.genToken(isAdmin, userId);
+      const token: string = tokenMock.genToken(userId);
       const response = await supertest(app)
       .get(`${baseUrl}`) 
       .set('Authorization', `Bearer ${token}`)

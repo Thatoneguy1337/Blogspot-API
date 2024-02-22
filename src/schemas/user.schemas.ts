@@ -19,8 +19,6 @@ const userSchema = z.object({
     telephone: z.string().max(11),
     birthdate: z.string().max(11),
     description: z.string().max(270).default("Hello, i'm using this social media app"),
-    is_banned:z.boolean().default(false),
-    is_moderator: z.boolean().default(false),
     zip_code: z.string().max(8),
     state: z.string().max(127),
     city: z.string().max(127),

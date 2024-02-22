@@ -43,8 +43,6 @@ import { string } from 'zod';
         telephone: createUserRouteMock.userComplete.telephone,
         birthdate: createUserRouteMock.userComplete.birthdate,
         description: createUserRouteMock.userComplete.description,
-        is_banned: createUserRouteMock.userComplete.is_banned,
-        is_moderator: createUserRouteMock.userComplete.is_moderator,
         zip_code: createUserRouteMock.userComplete.zip_code,
         state: createUserRouteMock.userComplete.state,
         city: createUserRouteMock.userComplete.city,

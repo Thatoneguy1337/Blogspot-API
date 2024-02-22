@@ -30,8 +30,6 @@ const readUsers = async (): Promise<Array<PrismaUser>> => {
       const reset_password: string = "";
       const user_img: string = "";
       const bg_img: string = "";
-      const is_banned: boolean = false;
-      const is_moderator: boolean = true;
       const ssc_number: string = generateSscNumber();
       const telephone: string = "1122604433";
       const birthdate: string ="06/04/1989";
@@ -54,8 +52,6 @@ const readUsers = async (): Promise<Array<PrismaUser>> => {
         reset_password,
         user_img,
         bg_img,
-        is_banned,
-        is_moderator,
         ssc_number,
         telephone,
         birthdate,

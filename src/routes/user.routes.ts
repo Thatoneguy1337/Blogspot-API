@@ -17,8 +17,7 @@ import {
     validateEmailExistsMiddleware,
     validateSocialSecurityExistsMiddleware,
     validateUserExistsMiddleware, 
-    validateAuthMiddleware,
-    validateUserOwnerMiddleware
+    validateAuthMiddleware
 } from "../middlewares/index"
 
 

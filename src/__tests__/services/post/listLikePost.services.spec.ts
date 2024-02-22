@@ -23,8 +23,6 @@ describe('GET /:id/like', () => {
         reset_password: "",
         user_img: "",
         bg_img: "",
-        is_banned: false,
-        is_moderator: false,
         ssc_number: generateSscNumber(),
         telephone: "1122604433",
         birthdate: "06/04/1989",
@@ -38,7 +36,6 @@ describe('GET /:id/like', () => {
     });
 
     userId = createdUser.id;
-    isAdmin = createdUser.is_moderator;
 
     const createPost = await prisma.posts.create({
       data: {
@@ -71,7 +68,7 @@ describe('GET /:id/like', () => {
   });
 
   test('should like a post by id', async () => {
-    const token: string = tokenMock.genToken(isAdmin, userId);
+    const token: string = tokenMock.genToken(userId);
     const response = await supertest(app)
     .get(`${baseUrl}/${postId}/like`)
     .set('Authorization', `Bearer ${token}`);
