@@ -13,6 +13,23 @@
  o que significa que algumas tabelas se relacionam e são codependentes umas com as outras, como demonstrado no exemplo env
  todos os dados devem ser preenchidos de forma apropriada para que o banco de dados seja conectado a aplicação o que é necessário
  para o funcionamento da aplicação. 
+
+Neste projeto, foi adotada uma abordagem de desenvolvimento orientada por testes, onde testes automatizados desempenham 
+um papel fundamental na garantia da qualidade do código. Para facilitar a execução de 
+testes de integração nos endpoints HTTP, optei por utilizar 
+a biblioteca Supertest. O Supertest nos permite simular requisições HTTP em nosso servidor Express sem a necessidade de um servidor real em execução, 
+o que torna nossos testes mais rápidos, confiáveis e fáceis de implementar. 
+Com o Supertest, podemos validar de forma eficiente o comportamento dos endpoints, 
+garantindo que o aplicativo funcione conforme o esperado em diferentes cenários e condições. 
+Isso nos proporciona maior confiança na estabilidade e no desempenho de nossa aplicação, além de facilitar a identificação e correção de 
+possíveis problemas antes de eles impactarem os usuários finais.
+
+
+
+
+ 
+
+ 
  
 ## Instalando Dependências:
 
@@ -28,6 +45,17 @@ npx prisma migrate dev
 
 # caso você queira rodar a aplicação localmente
 npm run dev
+
+# para rodar todos os testes
+npm run test
+
+# para rodar os testes individualmente
+npm run test nomedapasta/ 
+
+# para rodar os testes de  funcionalidades específicas:
+npm run test nomedapasta/nomedoarquivo
+
+
 
 ```
 ## **Endpoints**
@@ -51,9 +79,6 @@ npm run dev
 | GET         | Get thread             | `/threads/:post_id`           | No Authentication       |
 | PATCH       | Patch thread           | `/threads/:post_id`           | Authenticated           |
 | DELETE      | Delete thread          | `/threads/:post_id`           | Authenticated           |
-| POST        | Add follower           | `/followers/:user_id`         | Authenticated           |
-| GET         | Get followers          | `/followers/:user_id`         | Authenticated           |
-| DELETE      | Remove follower        | `/followers/:user_id`         | Authenticated           |
 
 
 <h2 align ='center'> Criando usuário </h2>
