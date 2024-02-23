@@ -67,7 +67,7 @@ npm run test nomedapasta/nomedoarquivo
 | POST        | Reset Password request | `/users/resetPassword`        | No Authentication       |
 | PATCH       | Reset Password         | `/users/resetPassword/:token` | No Authentication       |
 | PATCH       | Update user            | `/users/:id`                  | Authenticated           |
-| GET         | Get user profile       | `/users/profile`              | Authenticated           |
+| GET         | Get user profile       | `/users/profile`              | No Authentication       |
 | GET         | Get user               | `/users/:id`                  | Authenticated           |
 | DELETE      | Delete user            | `/users/:id`                  | Authenticated           |
 | POST        | Create post            | `/post`                       | Authenticated           |
@@ -221,6 +221,94 @@ body
 ```
 
 
+<h2 align ='center'> Listagem de posts </h2>
+
+Nessa rota é possível listar os posts cirados pelos usuários da plataforma sem a necessidade 
+de ter um token de acesso.
+
+
+NO BODY
+
+
+`GET /post - FORMATO DE RESPOSTA - STATUS 200`
+
+ ```json
+[
+	{
+		"id": 1,
+		"posted_at": "2023-11-30T13:45:29.969Z",
+		"description": "My favorite  deftones album is WhitePony",
+		"post_img": ""
+	},
+	{
+		"id": 2,
+		"posted_at": "2023-11-30T18:00:02.213Z",
+		"description": "My favorite  deftones album is WhitePony",
+		"post_img": ""
+	},
+	{
+		"id": 3,
+		"posted_at": "2023-11-30T18:00:02.248Z",
+		"description": "My favorite  deftones album is WhitePony",
+		"post_img": ""
+	},
+	{
+		"id": 4,
+		"posted_at": "2023-11-30T18:00:14.520Z",
+		"description": "My favorite  deftones album is WhitePony",
+		"post_img": ""
+	}
+]
+```
+
+<h2 align ='center'> Listagem de threads </h2>
+
+Nessa rota é possível listar as threads de um post, e não é necessário um token de acesso 
+para isso.
+
+NO BODY
+
+`GET /threads - FORMATO DE RESPOSTA - STATUS 200`
+
+
+```json
+
+{
+	"threads": [
+		{
+			"id": 1,
+			"created_at": "2024-02-16T00:47:09.762Z",
+			"edited": false,
+			"description": "Cool",
+			"comment_img": "",
+			"post_id": 1,
+			"user_id": 2,
+			"username": "Al_Peres"
+		},
+		{
+			"id": 2,
+			"created_at": "2024-02-16T00:47:09.762Z",
+			"edited": false,
+			"description": "Me too",
+			"comment_img": "",
+			"post_id": 1,
+			"user_id": 3,
+			"username": "Jordi"
+		},
+		{
+			"id": 3,
+			"created_at": "2024-02-16T00:47:09.762Z",
+			"edited": false,
+			"description": "Me too",
+			"comment_img": "",
+			"post_id": 1,
+			"user_id": 1,
+			"username": "Erick"
+		},
+		
+	]
+}
+```
 
 
 
@@ -229,8 +317,6 @@ body
 
 
 
-
- 
 
 
 
