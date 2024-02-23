@@ -465,11 +465,65 @@ para requisitar a rota .
 
 <h2 align ='center'> Criação de posts  </h2>
 
+```json
+    {
+    "description": "White Pony is my favorite deftones album, the second one is Around the Fur",
+    "post_img": "suaurlaqui.jpg"
+      } 
+```
+
 Nessa rota é possível que o usuário crie uma publicação que o usuário consiga tanto escrever o que lhe vêm a mente ou postar uma imagem, 
 é necessário um token de acesso para requisitar a rota.
 
 
 `POST /post - FORMATO DE RESPOSTA - STATUS 201`
+
+
+```json
+{
+	"id": 1,
+	"posted_at": "2024-02-16T00:45:32.413Z",
+	"description": "White Pony is my favorite Deftones album, the second one is Around the Fur",
+	"post_img": "suaurlaqui.jpg"
+}
+```
+
+<h2 align ='center'> Edição de posts  </h2>
+ body 
+
+```json
+    {
+    "description": "Saturday Night Wrist is my favorite Deftones album, the second one is Diamond Eyes"
+   } 
+```
+Nessa rota é possível que o usuário edite uma publicação que ele tenha feito, 
+é necessário um token de acesso para requisitar a rota. 
+
+`PATCH /post - FORMATO DE RESPOSTA - STATUS 200`
+
+
+```json
+
+  {
+	"id": 1,
+	"posted_at": "2023-09-05T14:15:29.434Z",
+        "description": "Saturday Night Wrist is my favorite Deftones album, the second one is Diamond Eyes"
+	"post_img": "suaurlaqui.jpg",
+
+}
+
+```
+
+<h2 align ='center'> Deleção de posts  </h2>
+
+NO BODY
+
+Nessa rota é possível que o usuário delete uma publicação que ele tenha feito, 
+é necessário um token de acesso para requisitar a rota. 
+
+`DELETE /post - FORMATO DE RESPOSTA - STATUS 204 NO RETURN`
+
+
 
 
 
