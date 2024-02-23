@@ -76,7 +76,7 @@ npm run test nomedapasta/nomedoarquivo
 | PATCH       | Update posts           | `/post/:id`                   | Authenticated           |
 | DELETE      | Delete posts           | `/post/:id`                   | Authenticated           |
 | POST        | Post thread            | `/threads/:post_id`           | Authenticated           |
-| GET         | Get thread             | `/threads/:post_id`           | No Authentication       |
+| GET         | List threads           | `/threads/:post_id`           | No Authentication       |
 | PATCH       | Patch thread           | `/threads/:id`                | Authenticated           |
 | DELETE      | Delete thread          | `/threads/:id`                | Authenticated           |
 
@@ -268,7 +268,7 @@ para isso.
 
 NO BODY
 
-`GET /threads/:post_id - FORMATO DE RESPOSTA - STATUS 200`
+`GET /thread/:post_id - FORMATO DE RESPOSTA - STATUS 200`
 
 
 ```json
@@ -523,10 +523,18 @@ Nessa rota é possível que o usuário delete uma publicação que ele tenha fei
 
 `DELETE /post - FORMATO DE RESPOSTA - STATUS 204 NO RETURN`
 
+<h2 align ='center'> Deleção de posts  </h2>
+
+NO BODY
+
+Nessa rota é possível que o usuário delete uma publicação que ele tenha feito, 
+é necessário um token de acesso para requisitar a rota. 
+
+`DELETE /post - FORMATO DE RESPOSTA - STATUS 204 NO RETURN`
 
 
+<h2 align ='center'> Criação de likes no post</h2>
 
-
-
+NO BODY
 
 
