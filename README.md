@@ -68,7 +68,7 @@ npm run test nomedapasta/nomedoarquivo
 | PATCH       | Reset Password         | `/users/resetPassword/:token` | No Authentication       |
 | PATCH       | Update user            | `/users/:id`                  | Authenticated           |
 | GET         | Get user profile       | `/users/profile`              | No Authentication       |
-| GET         | Get user               | `/users/:id`                  | Authenticated           |
+| GET         | Get user               | `/users/:id`                  | No Authetication        |
 | DELETE      | Delete user            | `/users/:id`                  | Authenticated           |
 | POST        | Create post            | `/post`                       | Authenticated           |
 | GET         | List all posts         | `/post`                       | No Authentication       |
@@ -268,7 +268,7 @@ para isso.
 
 NO BODY
 
-`GET /threads - FORMATO DE RESPOSTA - STATUS 200`
+`GET /threads/:post_id - FORMATO DE RESPOSTA - STATUS 200`
 
 
 ```json
@@ -310,10 +310,166 @@ NO BODY
 }
 ```
 
+<h2 align ='center'> Pegar o usuário por id </h2>
+
+Nessa rota é possível listar pegar um usuário pelo id, não é necessário um token de acesso 
+para requisitar a rota.
+
+NO BODY
+
+
+`GET /users - FORMATO DE RESPOSTA - STATUS 200`
+
+
+```json
+{
+	"id": 2,
+	"fullname": "Alan Pereira",
+	"username": "Al_Peres",
+	"email": "A14nP3r31r4@gmail.com",
+	"user_img": "insirasuaurlaqui.jpg",
+	"bg_img": "insirasuaurlaqui.jpg",
+	"ssc_number": "17783543602",
+	"telephone": "1138666884",
+	"birthdate": "11/04/1999",
+	"description": "Hello, i'm using this social media app",
+	"is_banned": false,
+	"is_moderator": true,
+	"zip_code": "11060130",
+	"state": "Rio de Janeiro",
+	"city": "Rio de Janeiro",
+	"street": "Rua Ibiraba",
+	"number": "216"
+},
+{
+	"id": 3,
+	"fullname": "Alan Pereira",
+	"username": "Al_Peres",
+	"email": "A14nP3r31r4@gmail.com",
+	"user_img": "insirasuaurlaqui.jpg",
+	"bg_img": "insirasuaurlaqui.jpg",
+	"ssc_number": "17783543602",
+	"telephone": "1138666884",
+	"birthdate": "11/04/1999",
+	"description": "Hello, i'm using this social media app",
+	"is_banned": false,
+	"is_moderator": true,
+	"zip_code": "11060130",
+	"state": "Rio de Janeiro",
+	"city": "Rio de Janeiro",
+	"street": "Rua Ibiraba",
+	"number": "216"
+},
+{
+	"id": 4,
+	"fullname": "Alan Pereira",
+	"username": "Al_Peres",
+	"email": "A14nP3r31r4@gmail.com",
+	"user_img": "insirasuaurlaqui.jpg",
+	"bg_img": "insirasuaurlaqui.jpg",
+	"ssc_number": "17783543602",
+	"telephone": "1138666884",
+	"birthdate": "11/04/1999",
+	"description": "Hello, i'm using this social media app",
+	"is_banned": false,
+	"is_moderator": true,
+	"zip_code": "11060130",
+	"state": "Rio de Janeiro",
+	"city": "Rio de Janeiro",
+	"street": "Rua Ibiraba",
+	"number": "216"
+}
+```
+
+# Rotas que não precisam de autentificação
+
+
+<h2 align ='center'> Ver o perfil do usuário </h2>
+
+Nessa rota é possível que o usuário consiga ver o seu próprio perfil, é necessário um token de acesso 
+para requisitar a rota .
+
+NO BODY
+
+`GET /user/profile - FORMATO DE RESPOSTA - STATUS 200`
 
 
 
+```json
+{
+	"id": 2,
+	"fullname": "Alan Pereira",
+	"username": "Al_Peres",
+	"email": "A14nP3r31r4@gmail.com",
+	"user_img": "insirasuaurlaqui.jpg",
+	"bg_img": "insirasuaurlaqui.jpg",
+	"ssc_number": "17783543602",
+	"telephone": "1138666884",
+	"birthdate": "11/04/1999",
+	"description": "Hello, i'm using this social media app",
+	"is_banned": false,
+	"is_moderator": true,
+	"zip_code": "11060130",
+	"state": "Rio de Janeiro",
+	"city": "Rio de Janeiro",
+	"street": "Rua Ibiraba",
+	"number": "216"
+}
+```
 
+
+<h2 align ='center'> Editar perfil do usuário </h2>
+
+Nessa rota é possível que o usuário edite o seu próprio perfil, é necessário um token de acesso 
+para requisitar a rota .
+
+```json
+{
+ "description": "Usuário desta rede"
+}
+```
+
+`PATCH /user/:id - FORMATO DE RESPOSTA - STATUS 200`
+
+```json
+{
+	"id": 2,
+	"fullname": "Alan Pereira",
+	"username": "Al_Peres",
+	"email": "A14nP3r31r4@gmail.com",
+	"user_img": "insirasuaurlaqui.jpg",
+	"bg_img": "insirasuaurlaqui.jpg",
+	"ssc_number": "17783543602",
+	"telephone": "1138666884",
+	"birthdate": "11/04/1999",
+	"description": "Usuário desta rede",
+	"is_banned": false,
+	"is_moderator": true,
+	"zip_code": "11060130",
+	"state": "Rio de Janeiro",
+	"city": "Rio de Janeiro",
+	"street": "Rua Ibiraba",
+	"number": "216"
+}
+```
+
+<h2 align ='center'> Deletar perfil do usuário </h2>
+
+NO BODY
+
+Nessa rota é possível que o usuário delete o seu próprio perfil, é necessário um token de acesso 
+para requisitar a rota .
+
+`DELETE /user/:id - FORMATO DE RESPOSTA - STATUS 204 NO RETURN`
+
+
+<h2 align ='center'> Criação de posts  </h2>
+
+Nessa rota é possível que o usuário crie uma publicação que o usuário consiga tanto escrever o que lhe vêm a mente ou postar uma imagem, 
+é necessário um token de acesso para requisitar a rota.
+
+
+`POST /post - FORMATO DE RESPOSTA - STATUS 201`
 
 
 
