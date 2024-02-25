@@ -530,11 +530,68 @@ NO BODY
 Nessa rota é possível que o usuário delete uma publicação que ele tenha feito, 
 é necessário um token de acesso para requisitar a rota. 
 
-`DELETE /post - FORMATO DE RESPOSTA - STATUS 204 NO RETURN`
+`DELETE /post/:id - FORMATO DE RESPOSTA - STATUS 204 NO RETURN`
 
 
 <h2 align ='center'> Criação de likes no post</h2>
 
 NO BODY
+
+Nessa rota é possível que o usuário consiga dar like em uma publicação feito por outro usuário, 
+é necessário um token de acesso para requisitar a rota.
+
+
+`POST /post/:post_id/like`
+
+```json
+{
+	"id": 3,
+	"liked_at": "2024-02-16T16:50:21.623Z",
+	"username": "Whitepony",
+	"user": {
+		"id": 1,
+		"username": "Al_peres",
+		"user_img": "suaurlaqui.jpg"
+	}
+}
+```
+<h2 align ='center'> Criação de likes no post</h2>
+
+NO BODY
+
+Nessa rota é possível que o usuário consiga retornar o like de uma publicação feito por outro usuário, 
+é necessário um token de acesso para requisitar a rota.
+
+
+`GET /post/:post_id/like`
+
+```json
+{
+
+	"likes": [
+		{
+			"id": 5,
+			"liked_at": "2023-11-30T18:03:03.933Z",
+			"post_id": 2,
+			"user_id": 2,
+                        "username": "Erick"
+		},
+		{
+			"id": 6,
+			"liked_at": "2023-11-30T18:03:27.767Z",
+			"post_id": 2,
+			"user_id": 1,
+			"username":"Al_Peres"
+		}
+	]
+}
+}
+```
+
+
+
+
+
+
 
 
