@@ -75,6 +75,9 @@ npm run test nomedapasta/nomedoarquivo
 | GET         | Retrieve posts         | `/post/:id`                   | Authenticated           |
 | PATCH       | Update posts           | `/post/:id`                   | Authenticated           |
 | DELETE      | Delete posts           | `/post/:id`                   | Authenticated           |
+| GET         | Retrieve likes         | `/post/:id/like`              | Authenticated           |
+| POST        | Post likes             | `/post/:id/like`              | Authenticated           |
+| DELETE      | Delete likes           | `/post/:id/like`              | Authenticated           |
 | POST        | Post thread            | `/threads/:post_id`           | Authenticated           |
 | GET         | List threads           | `/threads/:post_id`           | No Authentication       |
 | PATCH       | Patch thread           | `/threads/:id`                | Authenticated           |
@@ -541,7 +544,7 @@ Nessa rota é possível que o usuário consiga dar like em uma publicação feit
 é necessário um token de acesso para requisitar a rota.
 
 
-`POST /post/:post_id/like`
+`POST /post/:post_id/like 201`
 
 ```json
 {
@@ -555,15 +558,15 @@ Nessa rota é possível que o usuário consiga dar like em uma publicação feit
 	}
 }
 ```
-<h2 align ='center'> Criação de likes no post</h2>
+<h2 align ='center'> listagem de likes no post</h2>
 
 NO BODY
 
-Nessa rota é possível que o usuário consiga retornar o like de uma publicação feito por outro usuário, 
+Nessa rota é possível que o usuário consiga retornar os likes de uma publicação feito por outro usuário, 
 é necessário um token de acesso para requisitar a rota.
 
 
-`GET /post/:post_id/like`
+`GET /post/:post_id/like 200 OK`
 
 ```json
 {
@@ -588,9 +591,125 @@ Nessa rota é possível que o usuário consiga retornar o like de uma publicaç�
 }
 ```
 
+<h2 align ='center'> deleção de likes no post</h2>
+
+NO BODY
+
+Nessa rota é possível que o usuário consiga deletar o like que ele deu uma publicação feito por um usuário, 
+é necessário um token de acesso para requisitar a rota.
 
 
+`DELETE /post/:post_id/like 204 NO RETURN`
 
+
+<h2 align ='center'> Criação de theads em um post </h2>
+
+```json
+{
+"description": "White Pony is my favorite deftones album, the second one is Around the Fur",
+"comment_img": "suaurlaqui.jpg"      
+}
+```
+
+Nessa rota é possível que o usuário consiga deixar um comentário em uma publicação feito por outro usuário, 
+é necessário um token de acesso para requisitar a rota.
+
+
+`POST /post/:post_id/like 201 CREATED`
+
+```json
+{
+	"id": 11,
+	"created_at": "2024-02-16T00:47:09.762Z",
+	"edited": false,
+	"description": "Diamond Eyes is my favorite deftones album, the second one is Gore",
+	"comment_img": "",
+	"username": "Al_Peres",
+	"user": {
+		"id": 12,
+		"username": "Al_Peres",
+		"user_img": "suaurlaqui.jpg"
+	}
+}
+
+```
+
+<h2 align ='center'> listagem de theads em um post </h2>
+
+NO BODY
+
+Nessa rota é possível que o usuário consiga listar as threads em uma publicação feito pelos usuários, 
+é necessário um token de acesso para requisitar a rota.
+
+
+`GET /post/:post_id/like 200 OK`
+
+```json
+{
+	"threads": [
+		{
+			"id": 11,
+			"created_at": "2024-02-16T00:47:09.762Z",
+			"edited": false,
+			"description": "Diamond Eyes is my favorite deftones album, the second one is Gore",
+			"comment_img": "",
+			"post_id": 11,
+			"user_id": 12,
+			"username": "Al_Peres"
+		},
+                {
+			"id": 11,
+			"created_at": "2024-02-16T00:52:09.762Z",
+			"edited": false,
+			"description": "My favorite is Adrenaline",
+			"comment_img": "",
+			"post_id": 11,
+			"user_id": 27,
+			"username": "Erick"
+		}
+	]
+}
+```
+
+<h2 align ='center'> edição de theads em um post </h2>
+
+```json
+{
+"description": "Diamond Eyes is my favorite deftones album, the second one is Koi no Yokan"
+}
+```
+Nessa rota é possível que o usuário consiga editar threads em uma publicação feita pelos usuário, 
+é necessário um token de acesso para requisitar a rota.
+
+
+`PATCH /post/:post_id/like 200 OK`
+
+```json
+{
+	"threads": [
+		{
+			"id": 11,
+			"created_at": "2024-02-16T00:47:09.762Z",
+			"edited": false,
+			"description": "Diamond Eyes is my favorite deftones album, the second one is Koi no Yokan",
+			"comment_img": "",
+			"post_id": 11,
+			"user_id": 12,
+			"username": "Al_Peres"
+		}
+	]
+}
+```
+
+<h2 align ='center'> deleção de theads em um post </h2>
+
+NO BODY
+
+Nessa rota é possível que o usuário consiga deletar threads uma publicação feita pelo usuári0, 
+é necessário um token de acesso para requisitar a rota.
+
+
+`DELETE /post/:post_id/like 204 NO RETURN`
 
 
 
