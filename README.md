@@ -91,7 +91,7 @@ npm run test nomedapasta/nomedoarquivo
  
  Nessa aplicação o usuário pode se cadastrar utilizando seu nome, social security number(cpf), zip code(cep), também é possível inserir 
  o papel de fundo do seu perfil inserindo a url da imagem no campo bg_img, o mesmo pode ser feito através do campo user_img e o usuário
- também é capaz de dar uma breve descrição sobre si mesmo no campo description, caso ele não queira terá uma mensgem padrão para usuários.
+ também é capaz de dar uma breve descrição sobre si mesmo no campo description, caso ele não queira terá uma mensagem padrão para usuários.
 
 ```json
 {
@@ -384,7 +384,7 @@ NO BODY
 }
 ```
 
-# Rotas que não precisam de autentificação
+# Rotas que precisam de autentificação
 
 
 <h2 align ='center'> Ver o perfil do usuário </h2>
