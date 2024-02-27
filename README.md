@@ -602,7 +602,7 @@ Nessa rota é possível que o usuário consiga deletar o like que ele deu uma pu
 `DELETE /post/:post_id/like 204 NO RETURN`
 
 
-<h2 align ='center'> Criação de theads em um post </h2>
+<h2 align ='center'> Criação de threads em um post </h2>
 
 ```json
 {
@@ -634,7 +634,7 @@ Nessa rota é possível que o usuário consiga deixar um comentário em uma publ
 
 ```
 
-<h2 align ='center'> listagem de theads em um post </h2>
+<h2 align ='center'> listagem de threads em um post </h2>
 
 NO BODY
 
@@ -671,7 +671,7 @@ Nessa rota é possível que o usuário consiga listar as threads em uma publica�
 }
 ```
 
-<h2 align ='center'> edição de theads em um post </h2>
+<h2 align ='center'> edição de threads em um post </h2>
 
 ```json
 {
@@ -701,7 +701,7 @@ Nessa rota é possível que o usuário consiga editar threads em uma publicaçã
 }
 ```
 
-<h2 align ='center'> deleção de theads em um post </h2>
+<h2 align ='center'> deleção de threads em um post </h2>
 
 NO BODY
 
