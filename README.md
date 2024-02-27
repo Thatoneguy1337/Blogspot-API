@@ -56,8 +56,15 @@ npm run test nomedapasta/
 npm run test nomedapasta/nomedoarquivo
 
 
-
 ```
+
+## Documentação do insomnia
+
+doc pages: https://thatoneguy1337.github.io/Blogspot-insomnia-documentation/
+
+
+
+
 ## **Endpoints**
 
 | HTTP Method | Description            | Endpoint                      | Authentication Required |
