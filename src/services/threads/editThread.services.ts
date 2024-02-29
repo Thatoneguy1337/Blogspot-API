@@ -7,10 +7,10 @@ import {
   import { threadSchemaResponse } from "../../schemas/threads.schemas";
   export const updateThreadService = async (
     data: TThreadsUpdateRequest,
-    commentId: number
+    threadId: number
   ): Promise<TThreadResponse> => {
     const updatedThreads: Threads = await prisma.threads.update({
-      where: { id: commentId },
+      where: { id: threadId },
       data: {
         ...data,
         edited: true,
