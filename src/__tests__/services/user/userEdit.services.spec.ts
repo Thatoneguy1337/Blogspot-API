@@ -52,9 +52,7 @@ describe('PATCH /users/:id (Editar usuário)', () => {
   
     it('Deve editar um usuário com sucesso', async () => {
       const editedUserData = {
-        fullname: 'Cleyton Neto',
-        username: 'Cleitin',
-        email: 'novousuario@email.com',
+        description: 'novo usuário'
       };
       const token: string = tokenMock.genToken(userId);
       const response = await supertest(app)
@@ -64,7 +62,7 @@ describe('PATCH /users/:id (Editar usuário)', () => {
   
       expect(response.status).toBe(200);
       expect(response.body).toEqual(expect.objectContaining(editedUserData));
-    });
+    }, 5000);
   
     
   

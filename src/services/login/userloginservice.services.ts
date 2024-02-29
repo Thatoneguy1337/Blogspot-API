@@ -27,7 +27,7 @@ export const createTokenService = async ({
   }
 
   const token: string = jwt.sign(
-    { is_moderator: user.is_moderator },
+    {},
     process.env.SECRET_KEY!,
     {
       expiresIn: process.env.EXPIRES_IN,

@@ -71,7 +71,7 @@ npm run dev
 	"sc_number":"15783543602",
 	"telephone":"1138666884",
 	"birthdate":"11/04/1999",
-	"is_moderator":true,
+	
 	"zip_code":"11060130",
 	"state":"São Paulo",
 	"city":"São Caetano",
@@ -98,7 +98,6 @@ npm run dev
 	"description": "Hello, i'm using this social media app",
 	"is_banned": false,
 	"is_active": false,
-	"is_moderator": true,
 	"zip_code": "11060130",
 	"state": "São Paulo",
 	"city": "São Caetano",
@@ -122,7 +121,7 @@ em caso de erro:
 "is_moderator": ["This field is required"],
 "city": ["This field is required."],
 "state": ["This field is required."],
-"street": ["This field is required."]
+"street": ["This field is required."],
 "number": ["This field is required."],
 "email": ["This field is required."],
 "password": ["This field is required."]

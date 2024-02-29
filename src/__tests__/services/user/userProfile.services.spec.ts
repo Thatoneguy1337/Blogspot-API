@@ -7,9 +7,9 @@ import tokenMock from "../../integration/token.mock";
 import {TUser} from "../../../interfaces/user.interfaces";
 import * as shortid from 'shortid';
 
-describe('GET /users/:id (Editar usuário)', () => {
+describe('GET /users/:id', () => {
   let userId: number;
-  let isAdmin: boolean;
+
   
   const baseUrl: string = '/user';
 

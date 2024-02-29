@@ -7,7 +7,7 @@ import tokenMock from "../../integration/token.mock";
 import {TUser} from "../../../interfaces/user.interfaces";
 import * as shortid from 'shortid';
 
-describe('GET /users/:id (Editar usuário)', () => {
+describe('GET /users/:id ', () => {
   let userId: number;
   
   
@@ -55,5 +55,5 @@ describe('GET /users/:id (Editar usuário)', () => {
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(200);
-  });
+  },5000);
 });

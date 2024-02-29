@@ -55,7 +55,7 @@ describe('PUT /users/:id (Editar usuário)', () => {
       
 
     expect(response.status).toBe(200);
-  }, 10000);
+  }, 5000);
 
 });
 

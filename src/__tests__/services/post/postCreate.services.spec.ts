@@ -56,7 +56,7 @@ describe('POST /post', () => {
       .send(createPost);
 
     expect(response.status).toBe(201);
-    }); 
+    }, 5000); 
     test(' should return  a 401 Authorization error', async () => {
       const createPost = {
         description: "White Pony is my favorite deftones album, the second one is Around the Fur"
@@ -66,7 +66,7 @@ describe('POST /post', () => {
       .send(createPost);
 
     expect(response.status).toBe(401);
-    }, 5000);     
+    });     
 
   });
 

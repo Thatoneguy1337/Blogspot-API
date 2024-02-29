@@ -15,11 +15,7 @@ export const validateUserOwnerMiddleware = async (req: Request, res: Response, n
   if (!user) {
     throw new AppError("User not found", 404);
   }
-   
-  if (user.is_moderator !== true ) {
-   throw new AppError("You don't have the necessary credentials", 403);
-  }
-
+  
   else if (user.id !== userLocal) {
     throw new AppError("You don't have the necessary credentials", 403);
   }

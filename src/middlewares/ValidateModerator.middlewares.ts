@@ -16,9 +16,5 @@ export const validateModMiddleware = async (req: Request, res: Response, next: N
     throw new AppError("User not found", 404);
   }
 
-  if (user.is_moderator && userIsModerator) {
-    return next();
-  }
-
-  throw new AppError("User is not a moderator");
-}
+  return next();
+};
