@@ -1,4 +1,4 @@
-# Projeto-Rede-Social-Api
+# Projeto Blogspot-Api
 
  Este é um projeto de rede-social desenvolvido por mim mesmo, no intuito de demonstrar meus conhecimentos em desenvolvimento  
  backend, esta Api foi baseada em um assignment que eu fiz previamente no curso da Kenzie Academy Brasil, onde eu teria de 
