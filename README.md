@@ -527,16 +527,6 @@ Nessa rota é possível que o usuário delete uma publicação que ele tenha fei
 
 `DELETE /post - FORMATO DE RESPOSTA - STATUS 204 NO RETURN`
 
-<h2 align ='center'> Deleção de posts  </h2>
-
-NO BODY
-
-Nessa rota é possível que o usuário delete uma publicação que ele tenha feito, 
-é necessário um token de acesso para requisitar a rota. 
-
-`DELETE /post/:id - FORMATO DE RESPOSTA - STATUS 204 NO RETURN`
-
-
 <h2 align ='center'> Criação de likes no post</h2>
 
 NO BODY
