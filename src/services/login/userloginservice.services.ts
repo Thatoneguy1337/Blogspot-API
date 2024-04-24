@@ -30,7 +30,7 @@ export const createTokenService = async ({
     {},
     process.env.SECRET_KEY!,
     {
-      expiresIn: process.env.EXPIRES_IN,
+      expiresIn: process.env.EXPIRES_IN as string | number,
       subject: user.id.toString(),
     }
   );
