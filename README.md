@@ -35,7 +35,7 @@ possíveis problemas antes de eles impactarem os usuários finais.
 
 ```bash
 # caso use npm
-npm run i
+npm run i ou npm run dev 
 
 # caso use yarn
 yarn
