@@ -26,7 +26,6 @@ const likeSchemaRequest = likePostSchema.omit({
  username: true,
  post_id: true,
  user_id: true,
- user: true
 })
 
 const manyLikesSchemaResponse = z.array(likePostSchemaResponse);

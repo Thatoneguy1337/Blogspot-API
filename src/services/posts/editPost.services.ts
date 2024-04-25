@@ -8,10 +8,14 @@ export const updatePostService = async (
   postId: number
 ): Promise<TPostResponse> => {
   
+  const { description, post_img } = data;
+  
   const updatedPost: Posts = await prisma.posts.update({
     where: { id: postId },
     data: {
-      ...data
+      description: description || null, 
+      post_img: post_img || null,
+
     }
     
 });
